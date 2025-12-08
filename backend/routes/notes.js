@@ -1,4 +1,4 @@
-// routes/notes.js (public)
+// backend/routes/notes.js (public)
 import express from "express";
 import Note from "../models/note.js";
 import multer from "multer";
@@ -14,17 +14,26 @@ const storage = multer.diskStorage({
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
     cb(null, dir);
   },
-  filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname)),
+  filename: (req, file, cb) =>
+    cb(null, Date.now() + path.extname(file.originalname)),
 });
 const upload = multer({ storage });
 
-// Public upload -> pending
+/**
+ * POST /api/notes/upload
+ * Public upload -> pending approval
+ */
 router.post("/upload", upload.single("file"), async (req, res) => {
   try {
-    const { branch, scheme, subject, subjectCode, title, url, tags, uploader } = req.body;
+    const { branch, scheme, subject, subjectCode, title, url, tags, uploader } =
+      req.body;
 
     let uploaderObj = {};
-    try { uploaderObj = uploader ? JSON.parse(uploader) : {}; } catch (e) { uploaderObj = {}; }
+    try {
+      uploaderObj = uploader ? JSON.parse(uploader) : {};
+    } catch {
+      uploaderObj = {};
+    }
 
     const note = new Note({
       branch,
@@ -33,10 +42,10 @@ router.post("/upload", upload.single("file"), async (req, res) => {
       subjectCode,
       title,
       url: url || "",
-      // <-- store only filename to avoid /uploads/uploads/... problems
+      // store only filename
       filePath: req.file ? req.file.filename : "",
-      tags: tags ? tags.split(",").map(t => t.trim()) : [],
-      status: "pending", // public uploads must be pending
+      tags: tags ? tags.split(",").map((t) => t.trim()) : [],
+      status: "pending",
       uploader: uploaderObj,
     });
 
@@ -48,10 +57,15 @@ router.post("/upload", upload.single("file"), async (req, res) => {
   }
 });
 
-// Public: get only approved notes
+/**
+ * GET /api/notes
+ * Only approved notes (for Resources page)
+ */
 router.get("/", async (req, res) => {
   try {
-    const notes = await Note.find({ status: "approved" }).sort({ createdAt: -1 });
+    const notes = await Note.find({ status: "approved" }).sort({
+      createdAt: -1,
+    });
     res.json(notes);
   } catch (err) {
     console.error("Failed to fetch public notes:", err);

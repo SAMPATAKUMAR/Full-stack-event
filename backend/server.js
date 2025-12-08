@@ -1,4 +1,4 @@
-// /c:/Projects/ChatGPT/EDUCONNECT/backend/server.js
+// backend/server.js
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -11,7 +11,7 @@ import fs from "fs";
 
 import messagesRoute from "./routes/messages.js";
 import Message from "./models/Message.js";
-import User from "./models/User.js"; // ensure this exists
+import User from "./models/User.js";
 
 import authRoutes from "./routes/auth.js";
 import profileRoutes from "./routes/profile.js";
@@ -28,7 +28,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve uploaded files
+// Serve uploaded files (note filePath is filename; URL: /uploads/<filename>)
 app.use("/uploads", express.static(path.join(path.resolve(), "uploads")));
 
 // Routes
@@ -39,11 +39,14 @@ app.use("/api/admin", adminNotesRoutes);
 app.use("/api/messages", messagesRoute);
 
 // Health
-app.get("/api/health", (req, res) => res.json({ status: "ok", time: new Date() }));
+app.get("/api/health", (req, res) =>
+  res.json({ status: "ok", time: new Date() })
+);
 
 // Firebase Admin init
 const serviceAccountPath =
-  process.env.FIREBASE_SERVICE_ACCOUNT_PATH || "./firebase-admin-service-account.json";
+  process.env.FIREBASE_SERVICE_ACCOUNT_PATH ||
+  "./firebase-admin-service-account.json";
 if (!fs.existsSync(serviceAccountPath)) {
   console.error("Firebase service account JSON not found at", serviceAccountPath);
   process.exit(1);
@@ -68,8 +71,10 @@ io.use(async (socket, next) => {
     const token = socket.handshake.auth?.token;
     if (!token) return next(new Error("NO_TOKEN"));
     const decoded = await admin.auth().verifyIdToken(token);
-    // store minimal user info on socket
-    socket.user = { uid: decoded.uid, name: decoded.name || decoded.email || null };
+    socket.user = {
+      uid: decoded.uid,
+      name: decoded.name || decoded.email || null,
+    };
     return next();
   } catch (err) {
     return next(new Error("INVALID_TOKEN"));
@@ -79,7 +84,6 @@ io.use(async (socket, next) => {
 io.on("connection", (socket) => {
   console.log("user connected", socket.user?.uid);
 
-  // join a room and emit last messages
   socket.on("joinRoom", async (room) => {
     try {
       const r = room || "global";
@@ -88,7 +92,10 @@ io.on("connection", (socket) => {
       socket.emit("joinedRoom", r);
       console.log(socket.user?.uid, "joined", r);
 
-      const msgs = await Message.find({ room: r }).sort({ createdAt: 1 }).limit(200).lean();
+      const msgs = await Message.find({ room: r })
+        .sort({ createdAt: 1 })
+        .limit(200)
+        .lean();
       socket.emit("roomMessages", msgs);
     } catch (err) {
       console.error("joinRoom error", err);
@@ -107,7 +114,6 @@ io.on("connection", (socket) => {
     }
   });
 
-  // typing indicators
   socket.on("typing", ({ room, displayName } = {}) => {
     if (!room) return;
     socket.to(room).emit("typing", { uid: socket.user?.uid, displayName });
@@ -115,21 +121,23 @@ io.on("connection", (socket) => {
 
   socket.on("stopTyping", ({ room, displayName } = {}) => {
     if (!room) return;
-    socket.to(room).emit("stopTyping", { uid: socket.user?.uid, displayName });
+    socket
+      .to(room)
+      .emit("stopTyping", { uid: socket.user?.uid, displayName });
   });
 
-  // sendMessage with clientId support and robust name resolution
   socket.on("sendMessage", async (data) => {
     try {
       const text = String(data?.text || "").trim();
       const room = String(data?.room || socket.currentRoom || "global");
       const clientId = data?.clientId || null;
-      const clientDisplayName = (data?.displayName && String(data.displayName).trim()) || null;
+      const clientDisplayName =
+        (data?.displayName && String(data.displayName).trim()) || null;
 
       if (!text) return;
 
-      // 1) Prefer canonical name from MongoDB
       let senderName = null;
+
       try {
         const userDoc = await User.findOne({ uid: socket.user?.uid }).lean();
         if (userDoc && (userDoc.name || userDoc.displayName)) {
@@ -139,23 +147,18 @@ io.on("connection", (socket) => {
         console.warn("User lookup failed:", err?.message);
       }
 
-      // 2) If missing, ask Firebase for displayName
       if (!senderName) {
         try {
           const fbUser = await admin.auth().getUser(socket.user?.uid);
           if (fbUser && fbUser.displayName) senderName = fbUser.displayName;
-        } catch (err) {
+        } catch {
           // ignore
         }
       }
 
-      // 3) fallback to client-provided safe displayName
       if (!senderName && clientDisplayName) senderName = clientDisplayName;
-
-      // 4) final fallback
       if (!senderName) senderName = "Unknown";
 
-      // Save message
       const messageDoc = await Message.create({
         uid: socket.user?.uid,
         room,
@@ -164,9 +167,10 @@ io.on("connection", (socket) => {
         createdAt: new Date(),
       });
 
-      // Prepare outgoing object and include clientId so clients can reconcile
       const outgoing = {
-        ...(typeof messageDoc.toObject === "function" ? messageDoc.toObject() : messageDoc),
+        ...(typeof messageDoc.toObject === "function"
+          ? messageDoc.toObject()
+          : messageDoc),
         clientId,
       };
 

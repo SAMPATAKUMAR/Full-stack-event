@@ -1,4 +1,4 @@
-// routes/adminNotes.js
+// backend/routes/adminNotes.js
 import express from "express";
 import Note from "../models/note.js";
 import multer from "multer";
@@ -8,18 +8,22 @@ import { sendMail } from "../utils/mailer.js";
 
 const router = express.Router();
 
-// Multer storage (same)
+// Multer storage (same as public)
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const dir = "uploads/";
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
     cb(null, dir);
   },
-  filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname)),
+  filename: (req, file, cb) =>
+    cb(null, Date.now() + path.extname(file.originalname)),
 });
 const upload = multer({ storage });
 
-// GET all notes (admin)
+/**
+ * GET /api/admin/notes
+ * All notes (any status)
+ */
 router.get("/notes", async (req, res) => {
   try {
     const notes = await Note.find().sort({ createdAt: -1 });
@@ -30,10 +34,14 @@ router.get("/notes", async (req, res) => {
   }
 });
 
-// GET pending
+/**
+ * GET /api/admin/notes/pending
+ */
 router.get("/notes/pending", async (req, res) => {
   try {
-    const pending = await Note.find({ status: "pending" }).sort({ createdAt: -1 });
+    const pending = await Note.find({ status: "pending" }).sort({
+      createdAt: -1,
+    });
     res.json(pending);
   } catch (err) {
     console.error("Failed to fetch pending notes:", err);
@@ -41,10 +49,14 @@ router.get("/notes/pending", async (req, res) => {
   }
 });
 
-// NEW: GET only approved notes (for public Resources)
+/**
+ * GET /api/admin/notes/approved
+ */
 router.get("/notes/approved", async (req, res) => {
   try {
-    const approved = await Note.find({ status: "approved" }).sort({ createdAt: -1 });
+    const approved = await Note.find({ status: "approved" }).sort({
+      createdAt: -1,
+    });
     res.json(approved);
   } catch (err) {
     console.error("Failed to fetch approved notes:", err);
@@ -52,10 +64,14 @@ router.get("/notes/approved", async (req, res) => {
   }
 });
 
-// Admin upload (auto-approved)
+/**
+ * POST /api/admin/notes
+ * Admin upload (auto-approved)
+ */
 router.post("/notes", upload.single("file"), async (req, res) => {
   try {
-    const { branch, scheme, subject, subjectCode, title, url, tags, adminName } = req.body;
+    const { branch, scheme, subject, subjectCode, title, url, tags, adminName } =
+      req.body;
 
     const note = new Note({
       branch,
@@ -64,9 +80,8 @@ router.post("/notes", upload.single("file"), async (req, res) => {
       subjectCode,
       title,
       url: url || "",
-      // <-- store only filename to avoid /uploads/uploads/... problems
       filePath: req.file ? req.file.filename : "",
-      tags: tags ? tags.split(",").map(t => t.trim()) : [],
+      tags: tags ? tags.split(",").map((t) => t.trim()) : [],
       status: "approved",
       approvedBy: adminName || "admin",
       approvedAt: new Date(),
@@ -74,7 +89,7 @@ router.post("/notes", upload.single("file"), async (req, res) => {
 
     await note.save();
 
-    // If uploader email exists, notify them (optional)
+    // optional: notify uploader if present
     const uploaderEmail = note.uploader?.email;
     if (uploaderEmail) {
       try {
@@ -96,7 +111,9 @@ router.post("/notes", upload.single("file"), async (req, res) => {
   }
 });
 
-// Approve (from pending) — sends email
+/**
+ * PATCH /api/admin/notes/:id/approve
+ */
 router.patch("/notes/:id/approve", async (req, res) => {
   try {
     const { id } = req.params;
@@ -108,7 +125,6 @@ router.patch("/notes/:id/approve", async (req, res) => {
     note.approvedBy = adminName || "admin";
     note.approvedAt = new Date();
     if (message) note.approvalMessage = message;
-
     await note.save();
 
     const uploaderEmail = note.uploader?.email;
@@ -117,8 +133,18 @@ router.patch("/notes/:id/approve", async (req, res) => {
         await sendMail({
           to: uploaderEmail,
           subject: `Your note "${note.title}" has been approved`,
-          html: `<p>Hi ${note.uploader?.name || ""},</p><p>Your note "<strong>${note.title}</strong>" has been approved and is now visible to everyone.</p>${message ? `<p><strong>Message from admin:</strong> ${message}</p>` : ""}<p>Thanks — EduConnect Team</p>`,
-          text: `Your note "${note.title}" has been approved. ${message ? "Message: " + message : ""}`,
+          html: `<p>Hi ${
+            note.uploader?.name || ""
+          },</p><p>Your note "<strong>${
+            note.title
+          }</strong>" has been approved and is now visible to everyone.</p>${
+            message
+              ? `<p><strong>Message from admin:</strong> ${message}</p>`
+              : ""
+          }<p>Thanks — EduConnect Team</p>`,
+          text: `Your note "${note.title}" has been approved. ${
+            message ? "Message: " + message : ""
+          }`,
         });
       } catch (e) {
         console.error("Email send error (approve):", e.message);
@@ -132,7 +158,9 @@ router.patch("/notes/:id/approve", async (req, res) => {
   }
 });
 
-// Reject (from pending) — sends email; optional delete file
+/**
+ * PATCH /api/admin/notes/:id/reject
+ */
 router.patch("/notes/:id/reject", async (req, res) => {
   try {
     const { id } = req.params;
@@ -144,10 +172,13 @@ router.patch("/notes/:id/reject", async (req, res) => {
     note.approvedBy = adminName || "admin";
     note.approvedAt = new Date();
     if (message) note.approvalMessage = message;
-
     await note.save();
 
-    if (deleteFile && note.filePath && fs.existsSync(path.join("uploads", note.filePath))) {
+    if (
+      deleteFile &&
+      note.filePath &&
+      fs.existsSync(path.join("uploads", note.filePath))
+    ) {
       try {
         fs.unlinkSync(path.join("uploads", note.filePath));
       } catch (e) {
@@ -161,8 +192,16 @@ router.patch("/notes/:id/reject", async (req, res) => {
         await sendMail({
           to: uploaderEmail,
           subject: `Your note "${note.title}" was not approved`,
-          html: `<p>Hi ${note.uploader?.name || ""},</p><p>Your note "<strong>${note.title}</strong>" was not approved.</p>${message ? `<p><strong>Reason:</strong> ${message}</p>` : ""}<p>If you'd like to re-submit after edits, please upload again.</p><p>— EduConnect Team</p>`,
-          text: `Your note "${note.title}" was not approved. ${message ? "Reason: " + message : ""}`,
+          html: `<p>Hi ${
+            note.uploader?.name || ""
+          },</p><p>Your note "<strong>${
+            note.title
+          }</strong>" was not approved.</p>${
+            message ? `<p><strong>Reason:</strong> ${message}</p>` : ""
+          }<p>If you'd like to re-submit after edits, please upload again.</p><p>— EduConnect Team</p>`,
+          text: `Your note "${note.title}" was not approved. ${
+            message ? "Reason: " + message : ""
+          }`,
         });
       } catch (e) {
         console.error("Email send error (reject):", e.message);
@@ -176,14 +215,21 @@ router.patch("/notes/:id/reject", async (req, res) => {
   }
 });
 
-// Delete note
+/**
+ * DELETE /api/admin/notes/:id
+ */
 router.delete("/notes/:id", async (req, res) => {
   try {
     const note = await Note.findById(req.params.id);
     if (!note) return res.status(404).json({ message: "Note not found" });
-    if (note.filePath && fs.existsSync(path.join("uploads", note.filePath))) {
+
+    if (
+      note.filePath &&
+      fs.existsSync(path.join("uploads", note.filePath))
+    ) {
       fs.unlinkSync(path.join("uploads", note.filePath));
     }
+
     await Note.findByIdAndDelete(req.params.id);
     res.json({ message: "Deleted" });
   } catch (err) {
