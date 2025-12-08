@@ -1,0 +1,185 @@
+/* Base layout */
+.register-bg {
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Dark theme */
+.dark-theme {
+  background-image: linear-gradient(135deg, #0b0b0d, #101214, #1a1d22);
+  color: white;
+}
+
+/* Light theme */
+.light-theme {
+  background-image: linear-gradient(135deg, #f0f4f8, #e2e8f0, #cbd5e1);
+  color: #1a202c;
+}
+
+/* Header */
+.register-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.register-header h1 {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.register-nav a {
+  margin-left: 1.5rem;
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+
+.dark-theme .register-nav a {
+  color: white;
+}
+
+.light-theme .register-nav a {
+  color: #1a202c;
+}
+
+.register-nav a:hover {
+  text-decoration: underline;
+}
+
+.theme-toggle {
+  margin-left: 1.5rem;
+  background: none;
+  border: none;
+  font-size: 0.875rem;
+  cursor: pointer;
+  color: inherit;
+}
+
+/* Card */
+.register-card {
+  max-width: 480px;
+  margin: 4rem auto;
+  padding: 2rem;
+  border-radius: 1rem;
+  text-align: center;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.35);
+}
+
+.dark-theme .register-card {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.light-theme .register-card {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Form */
+.register-card input {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  margin-top: 0.25rem;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.05);
+  color: inherit;
+}
+
+.light-theme .register-card input {
+  background-color: #f8fafc;
+  border: 1px solid #cbd5e1;
+  color: #1a202c;
+}
+
+.register-card input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.light-theme .register-card input::placeholder {
+  color: #94a3b8;
+}
+
+.register-card button {
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.dark-theme .register-card button {
+  background-color: #7c3aed;
+  color: white;
+}
+
+.dark-theme .register-card button:hover {
+  background-color: #6d28d9;
+}
+
+.light-theme .register-card button {
+  background-color: #4f46e5;
+  color: white;
+}
+
+.light-theme .register-card button:hover {
+  background-color: #4338ca;
+}
+
+.register-card a {
+  text-decoration: none;
+}
+
+.dark-theme .register-card a {
+  color: #c084fc;
+}
+
+.light-theme .register-card a {
+  color: #4f46e5;
+}
+
+.register-card a:hover {
+  text-decoration: underline;
+}
+
+
+
+
+.resources-container {
+  padding: 20px;
+}
+
+.resources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.resource-card {
+  padding: 12px;
+}
+
+.resource-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.btn-secondary {
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--accent-2);
+  color: #fff;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-secondary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+}

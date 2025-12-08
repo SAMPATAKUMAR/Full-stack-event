@@ -1,0 +1,216 @@
+/* Basic glassmorphism */
+.navbar-glass, .canvas-glass, .glass-button {
+  transition: all 0.3s ease;
+}
+
+/* Light Theme */
+[data-theme="light"] .navbar-glass,
+[data-theme="light"] .canvas-glass,
+[data-theme="light"] .glass-button {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #111;
+}
+
+[data-theme="light"] body {
+  color: #111;
+}
+
+/* Dark Theme */
+[data-theme="dark"] .navbar-glass,
+[data-theme="dark"] .canvas-glass,
+[data-theme="dark"] .glass-button {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+[data-theme="dark"] body {
+  color: #fff;
+}
+
+
+/* Canvas Card */
+.canvas-glass {
+  width: 100%;
+  max-width: 600px;
+  height: 300px;
+  border-radius: 20px;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  margin: 30px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* animation: float 4s ease-in-out infinite; */
+
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+
+}
+
+.glass-button {
+  padding: 14px 36px;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  margin-top: 20px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+/* Home text */
+.home-container h1, .home-container p {
+  text-align: center;
+  max-width: 600px;
+  margin: 10px auto;
+
+}
+
+
+/* ---------- Cards Grid ---------- */
+.cards-wrapper {
+  max-width: 1100px;
+  margin: 28px auto;
+  padding: 12px;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  align-items: stretch;
+}
+
+
+/* ---------- Final Lightning Card ---------- */
+.app-card {
+  background: rgba(255,255,255,0.04);
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+
+  transition: box-shadow 260ms cubic-bezier(.2,.9,.3,1);
+  box-shadow: 0 6px 18px rgba(2,6,23,0.22);
+  border: 1px solid rgba(255,255,255,0.04);
+
+  animation: cardIn 1m forwards cubic-bezier(.2,.9,.3,1);
+}
+
+/* No hover lift */
+.app-card:hover {
+  box-shadow: 0 10px 24px rgba(2,6,23,0.3);
+
+}
+
+
+/* Lightning glow (cursor) */
+.app-card::before {
+  content: "";
+  position: absolute;
+  top: var(--y, 50%);
+  left: var(--x, 50%);
+  width: 0;
+  height: 0;
+  transform: translate(-50%, -50%);
+  background: radial-gradient( circle, 
+    rgba(0, 210, 255, 0.55),
+    rgba(0, 180, 255, 0.20) 30%,
+    transparent 50%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 2;
+  transition: opacity 0.18s ease, width 0.18s ease, height 0.18s ease;
+
+}
+
+.app-card:hover::before {
+  width: 100vh;
+  height: 100vh;
+  opacity: 1;
+}
+
+/* Lightning streak */
+/* .app-card::after {
+  content: "";
+  position: absolute;
+  top: var(--y, 50%);
+  left: var(--x, 50%);
+  transform: translate(-50%, -50%) rotate(var(--angle, 0deg));
+  width: 2px;
+  height: 90px;
+  background: linear-gradient(180deg,
+    rgba(255,255,255,0.85),
+    rgba(0,200,255,0.0)
+  );
+  opacity: 0;
+  pointer-events: none;
+  border-radius: 2px;
+  transition: opacity 0.1s ease, transform 0.1s linear;
+} */
+
+.app-card:hover::after {
+  opacity: 0.2;
+}
+
+
+/* Icon */
+.card-icon {
+  font-size: 34px;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+
+  background: rgba(255,255,255,0.03);
+  box-shadow: 0 4px 12px rgba(2,6,23,0.2);
+
+}
+
+/* Body */
+.card-body h3 {
+  margin: 0 0 6px 0;
+  font-size: 18px;
+  font-weight: 600;
+
+}
+.card-body p {
+  margin: 0;
+  font-size: 13px;
+  opacity: 0.85;
+
+}
+
+/* Admin badge */
+.badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #e53935;
+  color: #fff;
+  padding: 6px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  
+}
+
+/* Card entrance animation */
+@keyframes cardIn {
+  from { transform: translateY(10px) scale(0.99); opacity: 0; }
+  to   { transform: translateY(0)    scale(1);    opacity: 1; }
+}
+

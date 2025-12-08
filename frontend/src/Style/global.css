@@ -1,0 +1,135 @@
+/* src/style/global.css */
+
+/* Reset & base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body, html {
+  width: 100%;
+  min-height: 100%;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Glass Card */
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+  padding: 1.5rem;
+  color: #fff;
+}
+
+/* Buttons */
+.glass-button {
+  padding: 0.7rem 1.8rem;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  transition: 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.glass-button:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar a {
+  color: #fff;
+  text-decoration: none;
+  margin-right: 1.5rem;
+  transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+  color: #ffd700;
+}
+
+.navbar .theme-toggle {
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+}
+
+/* Input fields */
+.input-field, .textarea-field {
+  width: 100%;
+  padding: 0.8rem;
+  margin: 0.5rem 0;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  backdrop-filter: blur(5px);
+}
+
+.input-field::placeholder, .textarea-field::placeholder {
+  color: #ddd;
+}
+
+/* Light Theme */
+.light-theme {
+  background: linear-gradient(135deg, #f0f0f0, #dcdcdc);
+  color: #000;
+}
+
+.light-theme .glass-card {
+  background: rgba(255, 255, 255, 0.3);
+  color: #000;
+}
+
+.light-theme .glass-button {
+  color: #000;
+  background: rgba(255,255,255,0.25);
+}
+
+.light-theme .input-field, .light-theme .textarea-field {
+  background: rgba(255,255,255,0.3);
+  color: #000;
+}
+
+.light-theme .navbar a {
+  color: #000;
+}
+
+.light-theme .navbar a:hover {
+  color: #1e3c72;
+}
+
+/* Forms */
+.form-actions {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile-pic-large {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  object-fit: cover;
+}
+
+.details p, .bio {
+  margin: 0.3rem 0;
+}

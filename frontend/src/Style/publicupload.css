@@ -1,0 +1,334 @@
+/* publicupload.css */
+
+/* Navbar (glass) - matches admin and home style */
+.navbar-glass.upload-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+  margin: 18px auto;
+  max-width: 1100px;
+  width: calc(100% - 40px);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.navbar-glass .logo {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.nav-right {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: inherit;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: background 160ms;
+}
+
+.nav-link:hover { background: rgba(255,255,255,0.03); }
+
+.welcome-txt {
+  padding: 6px 10px;
+  border-radius: 8px;
+  opacity: 0.9;
+  font-weight: 600;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  background: rgba(255,255,255,0.03);
+  font-weight: 600;
+}
+
+/* Page layout */
+.pubload-page {
+  min-height: calc(100vh - 80px);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* main upload container */
+.upload-container {
+  width: 100%;
+  max-width: 980px;
+  margin-top: 8px;
+  padding: 10px;
+}
+
+/* Upload Card */
+.upload-card {
+  background: rgba(255,255,255,0.02);
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 10px 40px rgba(2,6,23,0.28);
+  border: 1px solid rgba(255,255,255,0.04);
+}
+
+.upload-card h2 {
+  margin: 0 0 12px 0;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+}
+
+.muted {
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+  font-weight: 500;
+}
+
+/* rows and inputs */
+.row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.row select {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255,255,255,0.03);
+  color: inherit;
+  font-weight: 600;
+  min-width: 130px;
+}
+
+.full-input {
+  width: 97%;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,0.02);
+  color: inherit;
+  font-size: 15px;
+}
+
+/* file row */
+.file-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.file-label {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 1px dashed rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.01);
+}
+
+.file-label input[type="file"] {
+  display: inline-block;
+  margin-left: 8px;
+}
+
+/* tags input smaller */
+.tags-input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,0.02);
+  color: inherit;
+  font-size: 14px;
+}
+
+/* actions */
+.actions-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+  align-items: center;
+}
+
+.btn {
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  font-weight: 700;
+}
+
+.btn.primary {
+  background: rgba(33,150,243,0.95);
+  color: white;
+}
+
+.btn.ghost {
+  background: transparent;
+  color: inherit;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+/* small note */
+.note-txt {
+  margin-top: 12px;
+  color: rgba(255,255,255,0.75);
+  font-size: 13px;
+}
+
+/* responsiveness */
+@media (max-width: 720px) {
+  .row { flex-direction: column; }
+  .file-row { flex-direction: column; align-items: stretch; }
+  .nav-right { gap: 6px; }
+  .navbar-glass.upload-navbar { padding: 10px; width: calc(100% - 20px); }
+}
+
+
+
+/* ================================
+   THEME-AWARE SELECT & INPUT FIX
+   ================================ */
+
+/* Common look for select boxes */
+.row select,
+.full-input,
+.tags-input {
+  color: inherit;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.10);
+  transition: 0.25s ease-in-out;
+}
+
+/* Hover / Focus effects */
+.row select:hover,
+.full-input:hover,
+.tags-input:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+.row select:focus,
+.full-input:focus,
+.tags-input:focus {
+  outline: none;
+  border-color: rgba(100,150,255,0.9);
+  background: rgba(255,255,255,0.15);
+}
+
+/* ======================
+   DARK THEME
+   ====================== */
+[data-theme="dark"] select,
+[data-theme="dark"] .full-input,
+[data-theme="dark"] .tags-input {
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+/* Option styles */
+[data-theme="dark"] select option {
+  background: #0b0d11;
+  color: #ffffff;
+  padding: 12px;
+}
+
+/* Hover inside dropdown (Chrome/WebKit only) */
+[data-theme="dark"] select option:hover {
+  background: #1c1f25;
+}
+
+/* ======================
+   LIGHT THEME
+   ====================== */
+[data-theme="light"] select,
+[data-theme="light"] .full-input,
+[data-theme="light"] .tags-input {
+  background: rgba(0,0,0,0.06);
+  color: #111;
+  border: 1px solid rgba(0,0,0,0.15);
+}
+
+/* Light dropdown options */
+[data-theme="light"] select option {
+  background: #ffffff;
+  color: #111111;
+  padding: 12px;
+}
+
+/* Hover for light theme */
+[data-theme="light"] select option:hover {
+  background: #e9e9e9;
+}
+
+/* ======================
+   FILE UPLOAD FIELD
+   ====================== */
+
+.file-label {
+  background: rgba(255,255,255,0.06);
+  border: 1px dashed rgba(255,255,255,0.25);
+  color: inherit;
+}
+
+[data-theme="light"] .file-label {
+  background: rgba(0,0,0,0.05);
+  border: 1px dashed rgba(0,0,0,0.25);
+}
+
+/* ======================
+   BUTTONS
+   ====================== */
+
+.btn.primary {
+  background: linear-gradient(135deg, #2196f3, #1769aa);
+  border: none;
+  color: #fff;
+}
+
+.btn.primary:hover {
+  background: linear-gradient(135deg, #1e88e5, #125c99);
+}
+
+.btn.ghost {
+  color: inherit;
+  border: 1px solid currentColor;
+  background: transparent;
+}
+
+[data-theme="light"] .btn.ghost {
+  border-color: rgba(0,0,0,0.3);
+  color: #111;
+}
+
+[data-theme="dark"] .btn.ghost {
+  border-color: rgba(255,255,255,0.4);
+  color: #fff;
+}
+
+/* ======================
+   PLACEHOLDER TEXT
+   ====================== */
+[data-theme="dark"] ::placeholder {
+  color: rgba(255,255,255,0.55);
+}
+
+[data-theme="light"] ::placeholder {
+  color: rgba(0,0,0,0.55);
+}

@@ -1,0 +1,183 @@
+.resources-container {
+  padding: 20px;
+  text-align: center;
+}
+
+.branches-grid, .schemes-grid, .subjects-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.branch-card, .scheme-card, .subject-card {
+  padding: 30px 50px;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.branch-card:hover, .scheme-card:hover, .subject-card:hover {
+  transform: translateY(-5px) scale(1.05);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.back-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  background: red;
+  color: white;
+  font-weight: 600;
+}
+.search-input {
+  width: 80%;
+  max-width: 400px;
+  padding: 10px 15px;
+  margin: 20px auto;
+  display: block;
+  border-radius: 12px;
+  border: none;
+  backdrop-filter: blur(10px);
+  background: rgba(0,0,0,0.15);
+  color: #fff;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+[data-theme="light"] .search-input {
+  background: rgba(255,255,255,0.15);
+  color: #111;
+}
+
+.search-input::placeholder {
+  color: rgba(255,255,255,0.7);
+}
+
+[data-theme="light"] .search-input::placeholder {
+  color: rgba(0,0,0,0.6);
+}
+
+.resources-container {
+  padding: 20px;
+  text-align: center;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(120px,1fr));
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.branch-card {
+  padding: 20px;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: transform 0.3s;
+}
+
+.branch-card:hover {
+  transform: translateY(-6px) scale(1.05);
+}
+
+.back-btn {
+  margin: 10px 0;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.notes-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.note-card {
+  padding: 15px;
+  border-radius: 15px;
+  text-align: left;
+}
+
+.search-input {
+  padding: 10px;
+  border-radius: 10px;
+  width: 80%;
+  margin-bottom: 20px;
+}
+
+.open-btn {
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background: rgba(33, 150, 243, 0.8);
+  color: white;
+  font-weight: bold;
+  transition: transform 0.2s;
+}
+
+.open-btn:hover {
+  transform: scale(1.05);
+}
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+/* Modal Box */
+.modal-box {
+  width: 80%;
+  height: 80%;
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* PDF Viewer */
+.pdf-viewer {
+  width: 100%;
+  height: 90%;
+  border: none;
+  margin-top: 10px;
+}
+
+/* Buttons */
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.modal-open-btn,
+.modal-close-btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: var(--accent);
+  color: white;
+  font-weight: bold;
+}

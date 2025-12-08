@@ -1,0 +1,322 @@
+/* src/style/chat.css
+   Chat styles with data-theme light/dark support.
+   Theme is controlled by: document.documentElement.setAttribute("data-theme", "light" | "dark")
+*/
+
+/* --------- CSS variables (defaults) ---------- */
+:root {
+  --bg-page-dark: linear-gradient(180deg, rgba(17,24,39,1) 0%, rgba(6,11,26,1) 100%);
+  --bg-page-light: linear-gradient(180deg, #f6f7fb 0%, #eef2f8 100%);
+
+  --glass-bg-dark-1: rgba(255,255,255,0.02);
+  --glass-bg-dark-2: rgba(255,255,255,0.01);
+  --glass-border-dark: rgba(255,255,255,0.04);
+
+  --glass-bg-light-1: rgba(255,255,255,0.75);
+  --glass-bg-light-2: rgba(255,255,255,0.6);
+  --glass-border-light: rgba(0,0,0,0.06);
+
+  --accent: rgba(124, 58, 237, 0.9); /* purple */
+  --accent-soft: rgba(124, 58, 237, 0.12);
+
+  --text-dark: #eaeaf2;
+  --muted-dark: rgba(234,234,242,0.7);
+
+  --text-light: #0f1724;
+  --muted-light: rgba(16,24,40,0.6);
+
+  --shadow-dark: 0 8px 30px rgba(2,6,23,0.6);
+  --shadow-light: 0 6px 18px rgba(15,23,42,0.06);
+
+  --radius-lg: 14px;
+  --radius-sm: 10px;
+  --max-width: 90%;
+  --gap: 12px;
+  --glass-padding: 50px;
+
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* ---------- Theme-specific root overrides ---------- */
+:root[data-theme="dark"] {
+  --page-bg: var(--bg-page-dark);
+
+  --glass-bg-1: var(--glass-bg-dark-1);
+  --glass-bg-2: var(--glass-bg-dark-2);
+  --glass-border: var(--glass-border-dark);
+
+  --text: var(--text-dark);
+  --muted: var(--muted-dark);
+  --box-shadow: var(--shadow-dark);
+}
+
+:root[data-theme="light"] {
+  --page-bg: var(--bg-page-light);
+
+  --glass-bg-1: var(--glass-bg-light-1);
+  --glass-bg-2: var(--glass-bg-light-2);
+  --glass-border: var(--glass-border-light);
+
+  --text: var(--text-light);
+  --muted: var(--muted-light);
+  --box-shadow: var(--shadow-light);
+}
+
+/* ---------- Page base ---------- */
+/* html, body {
+  height: 100%;
+} */
+
+/* page bg */
+body {
+  margin: 0;
+  min-height: 90%;
+  background: var(--page-bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---------- main chat wrapper ---------- */
+.chat {
+  /* background-image: url(https://wallpapercave.com/wp/TQBlEjW.jpg); */
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  width: min(96vw, var(--max-width));
+  height: 40%;
+  margin: 4vh auto;
+  margin-bottom: 50px;
+  padding-bottom: 50px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: var(--gap);
+  padding: var(--glass-padding);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--glass-bg-1), var(--glass-bg-2));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--box-shadow);
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  overflow: hidden;
+}
+
+/* header */
+.chat-header {
+  /* background-image: url(https://www.pixelstalk.net/wp-content/uploads/images1/Colorful-Wallpaper-Pictures.jpg); */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px;
+  border-radius: calc(var(--radius-lg) - 4px);
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.002));
+  border: 1px solid rgba(255,255,255,0.02);
+  box-shadow: 0 4px 18px rgba(2,6,23,0.3);
+
+}
+
+.chat-header > div:first-child {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+/* header controls */
+.chat-header input[type="text"],
+.chat-header input[type="search"],
+.room-sets {
+  min-width: 140px;
+  max-width: 320px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.06);
+  background: rgba(255,255,255,0.03);
+  color: var(--text);
+  outline: none;
+  font-size: 0.9rem;
+  margin-right: 8px;
+  transition: box-shadow .15s ease, transform .08s ease;
+}
+
+/* make the room input visually suitable for both themes */
+:root[data-theme="dark"] .chat-header input,
+:root[data-theme="dark"] .room-sets {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.04);
+  color: var(--text);
+
+}
+
+:root[data-theme="light"] .chat-header input,
+:root[data-theme="light"] .room-sets {
+  background: rgba(15,23,42,0.03);
+  border: 1px solid rgba(0,0,0,0.06);
+  color: var(--text);
+}
+
+.chat-header input:focus {
+  box-shadow: 0 4px 20px rgba(124,58,237,0.12);
+  transform: translateY(-1px);
+
+}
+
+/* buttons */
+.chat-header button,
+.composer button {
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  background: linear-gradient(180deg, var(--accent), rgba(90,44,200,0.9));
+  color: white;
+  box-shadow: 0 6px 18px rgba(124,58,237,0.16);
+  transition: transform .12s ease, opacity .12s ease;
+}
+
+.chat-header button:active,
+.composer button:active { transform: translateY(1px); }
+.chat-header button[disabled] { opacity: 0.6; cursor: not-allowed; }
+
+/* ---------- messages area ---------- */
+.messages {
+  padding: 12px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+  border: 1px solid rgba(255,255,255,0.03);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* single message */
+.message {
+  max-width: 78%;
+  padding: 10px 12px;
+  border-radius: 15px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 4px 18px rgba(2,6,23,0.5);
+  align-self: flex-start;
+  transition: transform .08s ease;
+  color: var(--text);
+  
+}
+
+.message.me {
+  align-self: flex-end;
+  background: linear-gradient(180deg, rgba(124,58,237,0.14), rgba(124,58,237,0.08));
+  border: 1px solid rgba(124,58,237,0.18);
+  color: white;
+  box-shadow: 0 10px 30px rgba(124,58,237,0.09);
+}
+
+.message .meta {
+  font-size: 0.76rem;
+  color: var(--muted);
+  margin-bottom: 6px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.message .text {
+  font-size: 0.95rem;
+  line-height: 1.35;
+  color: var(--text);
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+/* small system message styling */
+.message.system {
+  align-self: center;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  max-width: 100%;
+  font-style: italic;
+}
+
+/* ---------- typing indicator ---------- */
+.typing-indicator {
+  align-self: flex-start;
+  margin-left: 6px;
+  font-size: 0.85rem;
+  color: var(--muted);
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+  border: 1px solid rgba(255,255,255,0.03);
+  max-width: 80%;
+}
+
+/* ---------- composer / input area ---------- */
+.composer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.03);
+  box-shadow: 0 4px 18px rgba(2,6,23,0.3);
+}
+
+.composer input[type="text"],
+.composer input[type="search"],
+.composer input[type="email"],
+.send-msg {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.015);
+  color: var(--text);
+  outline: none;
+  font-size: 0.95rem;
+  transition: box-shadow .15s ease, transform .08s ease;
+}
+
+.composer input:focus, .send-msg:focus {
+  box-shadow: 0 6px 24px rgba(124,58,237,0.08);
+}
+
+/* ---------- profile pic ---------- */
+.chat-header .profile-pic-large {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+}
+
+.chat hr{
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  margin: 8px 0;
+}
+
+/* ---------- responsive tweaks ---------- */
+@media (max-width: 720px) {
+  .chat {
+    width: 96vw;
+    height: 92vh;
+    padding: 10px;
+    gap: 10px;
+  }
+  .message { max-width: 92%; }
+  .chat-header input { min-width: 100px; }
+}
+
+/* accessibility: prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+}
+
+/* small utility */
+.hidden { display: none !important; }
+
+

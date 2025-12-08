@@ -1,0 +1,83 @@
+/* Default Dark Theme */
+:root {
+  --bg: #0f172a;
+  --text: #e5e7eb;
+  --muted: #cbd5e1;
+
+  --card-bg: rgba(255,255,255,0.1);
+  --card-bg-strong: rgba(255,255,255,0.18);
+
+  --accent: #7c3aed;   /* violet */
+  --accent-2: #06b6d4; /* cyan */
+  --danger: #ef4444;   /* red */
+
+  --radius: 12px;
+  --radius-sm: 10px;
+}
+
+/* Light Theme Overrides */
+[data-theme="light"] {
+  --bg: #f9fafb;
+  --text: #1f2937;
+  --muted: #334155;
+
+  --card-bg: rgba(255,255,255,0.7);
+  --card-bg-strong: rgba(255,255,255,0.85);
+
+  --accent: #2563eb;   /* blue */
+  --accent-2: #0ea5e9; /* sky */
+  --danger: #dc2626;   /* red */
+}
+
+/* Apply theme globally */
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.3s ease, color 0.3s ease;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+}
+
+/* Shared glass card */
+.glass-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.18);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.glass-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+}
+
+/* Shared button */
+.btn {
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  margin-left: 16px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  background: var(--accent-2);
+  color: #fff;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.theme-toggle:hover {
+  transform: scale(1.05);
+}

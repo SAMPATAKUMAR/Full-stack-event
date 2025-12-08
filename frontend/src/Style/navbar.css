@@ -1,0 +1,241 @@
+/* Basic glassmorphism styles */
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Maze&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Foldit:wght@100..900&family=Rubik+Maze&display=swap');
+
+
+
+.navbar-glass, .canvas-glass, .glass-button {
+  transition: all 0.3s ease;
+}
+
+/* Light Theme */
+[data-theme="light"] .navbar-glass,
+[data-theme="light"] .canvas-glass,
+[data-theme="light"] .glass-button {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #111;
+}
+
+[data-theme="light"] body {
+  color: #111;
+}
+
+/* Dark Theme */
+[data-theme="dark"] .navbar-glass,
+[data-theme="dark"] .canvas-glass,
+[data-theme="dark"] .glass-button {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+[data-theme="dark"] body {
+  color: #fff;
+}
+
+/* Keep the previous glassmorphism, floating, and hover effect */
+.navbar-glass {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  border-radius: 15px;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  margin-bottom: 40px;
+}
+
+.navbar-glass a {
+  margin-right: 20px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.navbar-glass a:hover {
+  color: #2196f3;
+}
+
+.glass-button::before {
+  content: "";
+  position: absolute;
+  top: var(--y, 50%);
+  left: var(--x, 50%);
+  width: 0;
+  height: 0;
+  transform: translate(-50%, -50%);
+  background: radial-gradient( circle, 
+    rgba(0, 210, 255, 0.55),
+    rgba(0, 180, 255, 0.20) 30%,
+    transparent 50%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 2;
+  transition: opacity 0.18s ease, width 0.18s ease, height 0.18s ease;
+
+}
+
+.glass-button:hover::before {
+  width: 100vh;
+  height: 100vh;
+  opacity: 1;
+}
+
+
+.nav-container {
+  position: sticky;
+  z-index: 10;
+  /* position:fixed; */
+} 
+
+/* Logo
+.logo img {
+  height: 40px;
+} */
+.logo a {
+ font-family: "Rubik Maze", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  color:#fff;
+  font-size: 24px;
+}
+/* Nav links */
+.nav-links a {
+  margin-left: 20px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}   
+.nav-links a:hover {
+  color: #2196f3;
+
+
+}
+
+
+.nav-links button {
+  margin-left: 20px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #2196f3;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.nav-links button:hover {
+  background-color: #1976d2;
+  border:.5px solid black;
+  box-shadow: 0 4px 18px rgba(2,6,23,0.3);
+}
+
+.nav-links .Link-btn3 {
+  margin-left: 20px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #2196f3;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.nav-links .Link-btn3:hover {
+  background-color: #1976d2;
+  color: black;
+}
+
+.nav-links .Link-btn4 {
+  margin-left: 20px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #2196f3;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.nav-links .Link-btn4:hover {
+  background-color: #1976d2;
+  color: black;
+}
+
+.nav-links .Link-btn5 {
+  margin-left: 20px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #2196f3;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.nav-links .Link-btn5:hover {
+  background-color: #1976d2;
+  color: black;
+}
+
+.nav-links .Link-btn6 {
+  margin-left: 20px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #2196f3;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.nav-links .Link-btn6:hover {
+  background-color: #1976d2;
+  color: black;
+}
+
+.nav-links .Link-btn1 {
+  margin-left: 20px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #2196f3;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.nav-links .Link-btn1:hover {
+  background-color: #1976d2;
+  color: black;
+}
+
+.nav-links .Link-btn2 {
+  margin-left: 20px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #2196f3;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.nav-links .Link-btn2:hover {
+  background-color: #1976d2;
+  color: black;
+}
+
+
+/* Responsive */
+@media (max-width: 600px) {
+  .navbar-glass {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .nav-links {
+    margin-top: 10px;
+  }
+}
