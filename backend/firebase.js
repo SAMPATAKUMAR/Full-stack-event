@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 
 const serviceAccount = JSON.parse(
-  fs.readFileSync(path.resolve("./firebase-service-account.json"), "utf-8")
+  fs.readFileSync(path.resolve("./firebase-service-account.js"), "utf-8")
 );
 
 admin.initializeApp({
