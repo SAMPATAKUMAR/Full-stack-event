@@ -14,7 +14,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const toggleTheme = () => setTheme(prev => (prev === "dark" ? "light" : "dark"));
-  const Admin_uid = "BchFbbDOoTMxE7vdodxqYAkyEWA2";
+  const Admin_uid = "UR_ID";
 
   const handleLogin = async (e) => {
   e.preventDefault();
