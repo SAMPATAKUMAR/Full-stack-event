@@ -3,4 +3,4 @@
 
 project:- EduConnect: A Student Community Platform
 
-visit :- https://www.educonnect25.vercel.app
+visit :- educonnect25.vercel.app
