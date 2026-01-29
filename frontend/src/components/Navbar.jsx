@@ -1,27 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { auth } from "../firebase"; // IMPORTANT
+import { auth } from "../firebase";
 import "../Style/navbar.css";
 
 function Navbar() {
-  // Hooks must always run — do NOT put returns before hooks
   const [theme, setTheme] = useState(
     () => localStorage.getItem("theme") || "dark",
   );
-  const [user, setUser] = useState(null); // real-time auth user
+  const [user, setUser] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false); // 🔹 hamburger state
   const location = useLocation();
 
-  // Theme updater (hook 1)
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  // Listen to Firebase login status (hook 2)
   useEffect(() => {
     const unsub = auth.onAuthStateChanged((u) => {
       setUser(u);
-      // optional: keep localStorage uid in sync
       if (u) localStorage.setItem("uid", u.uid);
       else localStorage.removeItem("uid");
     });
@@ -30,7 +27,6 @@ function Navbar() {
 
   const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
 
-  // Now it's safe to early-return based on route because all hooks above already ran
   const hideOn = [
     "/login",
     "/register",
@@ -44,42 +40,74 @@ function Navbar() {
     <div className="nav-container">
       <nav className="navbar-glass">
         <div className="logo">
-          <Link className="h-btn" to="/">
+          <Link to="/" onClick={() => setMenuOpen(false)}>
             EduConnect
           </Link>
         </div>
 
-        <div className="nav-links">
-          {/* NOT LOGGED IN */}
+        {/* 🔹 Hamburger */}
+        <div
+          className={`hamburger ${menuOpen ? "open" : ""}`}
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <span />
+          <span />
+          <span />
+        </div>
+
+        <div className={`nav-links ${menuOpen ? "active" : ""}`}>
           {!user && (
-            <Link className="Link-btn1" to="/login">
+            <Link
+              className="Link-btn1"
+              to="/login"
+              onClick={() => setMenuOpen(false)}
+            >
               Login
             </Link>
           )}
           {!user && (
-            <Link className="Link-btn2" to="/register">
+            <Link
+              className="Link-btn2"
+              to="/register"
+              onClick={() => setMenuOpen(false)}
+            >
               Register
             </Link>
           )}
 
-          {/* LOGGED IN */}
           {user && (
-            <Link className="Link-btn3" to="/dashboard">
+            <Link
+              className="Link-btn3"
+              to="/dashboard"
+              onClick={() => setMenuOpen(false)}
+            >
               Dashboard
             </Link>
           )}
           {user && (
-            <Link className="Link-btn4" to="/resources">
+            <Link
+              className="Link-btn4"
+              to="/resources"
+              onClick={() => setMenuOpen(false)}
+            >
               Resources
             </Link>
           )}
           {user && (
-            <Link className="Link-btn5" to="/upload">
+            <Link
+              className="Link-btn5"
+              to="/upload"
+              onClick={() => setMenuOpen(false)}
+            >
               Upload
             </Link>
           )}
           {user && (
-            <Link className="Link-btn6" to="/chats">
+            <Link
+              className="Link-btn6"
+              to="/chats"
+              onClick={() => setMenuOpen(false)}
+            >
               Chat
             </Link>
           )}
