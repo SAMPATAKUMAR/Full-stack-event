@@ -1,6 +1,6 @@
 // src/Pages/PendingApprovals.jsx
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../utils/api";
 import { getNoteUrl } from "../utils/getNoteUrl";
 import "../Style/admin.css";
 
@@ -33,7 +33,7 @@ export default function PendingApprovals({ adminName = "Admin" }) {
   async function fetchPending() {
     setLoading(true);
     try {
-      const res = await axios.get("/api/admin/notes/pending");
+      const res = await api.get("/api/admin/notes/pending");
       setPending(res.data || []);
     } catch (err) {
       console.error("Failed to fetch pending notes:", err);
@@ -44,10 +44,11 @@ export default function PendingApprovals({ adminName = "Admin" }) {
   }
 
   async function handleApprove(id) {
+    if (!window.confirm("Approve this note?")) return;
     try {
-      await axios.patch(`/api/admin/notes/${id}/approve`, {
+      await api.patch(`/api/admin/notes/${id}/approve`, {
         adminName,
-        message: adminMessage || "",
+        message: adminMessage,
       });
       setAdminMessage("");
       await fetchPending();
@@ -77,7 +78,7 @@ export default function PendingApprovals({ adminName = "Admin" }) {
   async function handleDelete(id) {
     if (!window.confirm("Delete this pending note and its file?")) return;
     try {
-      await axios.delete(`/api/admin/notes/${id}`);
+      await api.delete(`/api/admin/notes/${id}`);
       await fetchPending();
       alert("Deleted");
     } catch (err) {
