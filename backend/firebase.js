@@ -1,13 +1,20 @@
+import "dotenv/config";
 import admin from "firebase-admin";
-import fs from "fs";
-import path from "path";
 
-const serviceAccount = JSON.parse(
-  fs.readFileSync(path.resolve("./firebase-service-account.json"), "utf-8")
-);
+const serviceAccount = {
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+  privateKey: process.env.FIREBASE_PRIVATE_KEY
+    ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n")
+    : undefined,
+};
 
-admin. initializeApp({
-credential: admin. credential.cert(serviceAccount),
+if (!serviceAccount.privateKey) {
+  console.error("Missing FIREBASE_PRIVATE_KEY in environment variables");
+}
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
 });
 
 export default admin;
