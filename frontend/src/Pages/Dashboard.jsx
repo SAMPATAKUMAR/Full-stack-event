@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../style/theme.css";
+import "../Style/theme.css";
 import "../Style/dashboard.css";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
