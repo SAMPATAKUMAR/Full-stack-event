@@ -1,0 +1,79 @@
+
+> frontend@0.0.0 lint
+> eslint .
+
+
+C:\my projects\Full-stack-event\frontend\src\App.jsx
+  1:17  error  'useState' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+C:\my projects\Full-stack-event\frontend\src\Pages\AdminDashboard.jsx
+  41:5  error  Error: Cannot access variable before it is declared
+
+`fetchNotes` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+  39 |
+  40 |   useEffect(() => {
+> 41 |     fetchNotes();
+     |     ^^^^^^^^^^ `fetchNotes` accessed before it is declared
+  42 |   }, []);
+  43 |
+  44 |   const fetchNotes = async () => {
+
+  42 |   }, []);
+  43 |
+> 44 |   const fetchNotes = async () => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 45 |     try {
+     | ^^^^^^^^^
+> 46 |       const res = await axios.get("/api/admin/notes");
+     | ^^^^^^^^^
+> 47 |       setNotes(res.data);
+     | ^^^^^^^^^
+> 48 |     } catch (error) {
+     | ^^^^^^^^^
+> 49 |       console.error("Failed to fetch notes:", error);
+     | ^^^^^^^^^
+> 50 |     }
+     | ^^^^^^^^^
+> 51 |   };
+     | ^^^^^ `fetchNotes` is declared here
+  52 |
+  53 |   // Upload note
+  54 |   const handleUpload = async () => {  react-hooks/immutability
+
+C:\my projects\Full-stack-event\frontend\src\Pages\Home.jsx
+  11:17  error  'setTheme' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          no-unused-vars
+  27:7   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  25 |     if (fastUser) {
+  26 |       console.log("[Home] fast path auth.currentUser:", fastUser.uid);
+> 27 |       setUser(fastUser);
+     |       ^^^^^^^ Avoid calling setState() directly within an effect
+  28 |       const adminUid = localStorage.getItem("adminUid");
+  29 |       setIsAdmin(Boolean(adminUid && fastUser.uid === adminUid));
+  30 |     } else {  react-hooks/set-state-in-effect
+
+C:\my projects\Full-stack-event\frontend\src\Pages\PendingApprovals.jsx
+  31:5  warning  Unused eslint-disable directive (no problems were reported from 'react-hooks/exhaustive-deps')
+
+C:\my projects\Full-stack-event\frontend\src\Pages\PublicUpload.jsx
+  33:9  error  'toggleTheme' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+C:\my projects\Full-stack-event\frontend\src\Pages\Resources.jsx
+  8:17  error  'setTheme' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+C:\my projects\Full-stack-event\frontend\src\utils\getNoteUrl.js
+  31:12  error  'e' is defined but never used  no-unused-vars
+
+C:\my projects\Full-stack-event\frontend\vite.config.js
+  1:10  error  'defineConfig' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+Γ£û 9 problems (8 errors, 1 warning)
+  0 errors and 1 warning potentially fixable with the `--fix` option.
+

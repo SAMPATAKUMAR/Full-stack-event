@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import "../style/publicupload.css"; // import the CSS below
 
 export default function PublicUpload({ currentUser }) {
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
+  const [theme] = useState(localStorage.getItem("theme") || "dark");
   const [branch, setBranch] = useState("CSE");
   const [scheme, setScheme] = useState("2020");
   const [subject, setSubject] = useState("DSA");
@@ -29,8 +29,6 @@ export default function PublicUpload({ currentUser }) {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
-
-  const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
 
   const handleSubmit = async () => {
     if (!title || (!url && !file) || !subjectCode) {
@@ -77,23 +75,38 @@ export default function PublicUpload({ currentUser }) {
 
   return (
     <div className="pubupload-page">
-      
-
       <main className="upload-container">
         <div className="upload-card">
-          <h2>Upload Resource <span className="muted">(Pending Review)</span></h2>
+          <h2>
+            Upload Resource <span className="muted">(Pending Review)</span>
+          </h2>
 
           <div className="row">
             <select value={branch} onChange={(e) => setBranch(e.target.value)}>
-              {branches.map((b) => <option key={b} value={b}>{b}</option>)}
+              {branches.map((b) => (
+                <option key={b} value={b}>
+                  {b}
+                </option>
+              ))}
             </select>
 
             <select value={scheme} onChange={(e) => setScheme(e.target.value)}>
-              {schemes.map((s) => <option key={s} value={s}>{s}</option>)}
+              {schemes.map((s) => (
+                <option key={s} value={s}>
+                  {s}
+                </option>
+              ))}
             </select>
 
-            <select value={subject} onChange={(e) => setSubject(e.target.value)}>
-              {subjects[branch].map((s) => <option key={s} value={s}>{s}</option>)}
+            <select
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}
+            >
+              {subjects[branch].map((s) => (
+                <option key={s} value={s}>
+                  {s}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -133,7 +146,11 @@ export default function PublicUpload({ currentUser }) {
           </div>
 
           <div className="actions-row">
-            <button className="btn primary" onClick={handleSubmit} disabled={loading}>
+            <button
+              className="btn primary"
+              onClick={handleSubmit}
+              disabled={loading}
+            >
               {loading ? "Uploading..." : "Upload (Pending approval)"}
             </button>
 
@@ -151,7 +168,9 @@ export default function PublicUpload({ currentUser }) {
             </button>
           </div>
 
-          <p className="note-txt">Uploads will be visible to everyone only after admin approval.</p>
+          <p className="note-txt">
+            Uploads will be visible to everyone only after admin approval.
+          </p>
         </div>
       </main>
     </div>

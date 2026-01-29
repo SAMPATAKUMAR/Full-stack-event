@@ -28,7 +28,7 @@ export function getNoteUrl(note) {
     } else {
       backendBase = "http://localhost:5000";
     }
-  } catch (e) {
+  } catch {
     backendBase = "http://localhost:5000";
   }
 

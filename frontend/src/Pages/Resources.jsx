@@ -5,7 +5,7 @@ import { getNoteUrl } from "../utils/getNoteUrl";
 import "../style/resources.css";
 
 export default function Resources() {
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
+  const [theme] = useState(localStorage.getItem("theme") || "dark");
   const [step, setStep] = useState(1);
   const [branch, setBranch] = useState("");
   const [scheme, setScheme] = useState("");
@@ -27,7 +27,12 @@ export default function Resources() {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  const fetchNotes = async (branchVal, schemeVal, subjectVal, searchVal = "") => {
+  const fetchNotes = async (
+    branchVal,
+    schemeVal,
+    subjectVal,
+    searchVal = "",
+  ) => {
     if (!branchVal || !schemeVal || !subjectVal) return;
     try {
       // Use the public endpoint that returns only approved notes
@@ -38,7 +43,8 @@ export default function Resources() {
       if (!Array.isArray(data)) {
         // try common wrappers
         if (data?.notes && Array.isArray(data.notes)) data = data.notes;
-        else if (data?.approved && Array.isArray(data.approved)) data = data.approved;
+        else if (data?.approved && Array.isArray(data.approved))
+          data = data.approved;
         else {
           console.warn("Unexpected /api/notes response shape:", res.data);
           data = [];
@@ -50,11 +56,13 @@ export default function Resources() {
           n.branch === branchVal &&
           n.scheme === schemeVal &&
           n.subject === subjectVal &&
-          (
-            (n.title || "").toLowerCase().includes(searchVal.toLowerCase()) ||
-            (n.subjectCode || "").toLowerCase().includes(searchVal.toLowerCase()) ||
-            (n.tags || []).some((t) => t.toLowerCase().includes(searchVal.toLowerCase()))
-          )
+          ((n.title || "").toLowerCase().includes(searchVal.toLowerCase()) ||
+            (n.subjectCode || "")
+              .toLowerCase()
+              .includes(searchVal.toLowerCase()) ||
+            (n.tags || []).some((t) =>
+              t.toLowerCase().includes(searchVal.toLowerCase()),
+            )),
       );
       setNotes(filtered);
     } catch (error) {
@@ -89,7 +97,10 @@ export default function Resources() {
             <div
               key={b}
               className="branch-card glass-card"
-              onClick={() => { setBranch(b); setStep(2); }}
+              onClick={() => {
+                setBranch(b);
+                setStep(2);
+              }}
             >
               {b}
             </div>
@@ -100,13 +111,18 @@ export default function Resources() {
       {/* Step 2: Select Scheme */}
       {step === 2 && (
         <>
-          <button className="back-btn" onClick={() => setStep(1)}>← Back</button>
+          <button className="back-btn" onClick={() => setStep(1)}>
+            ← Back
+          </button>
           <div className="card-grid">
             {schemes.map((s) => (
               <div
                 key={s}
                 className="branch-card glass-card"
-                onClick={() => { setScheme(s); setStep(3); }}
+                onClick={() => {
+                  setScheme(s);
+                  setStep(3);
+                }}
               >
                 {s}
               </div>
@@ -118,7 +134,9 @@ export default function Resources() {
       {/* Step 3: Select Subject */}
       {step === 3 && (
         <>
-          <button className="back-btn" onClick={() => setStep(2)}>← Back</button>
+          <button className="back-btn" onClick={() => setStep(2)}>
+            ← Back
+          </button>
           <div className="card-grid">
             {subjects[branch].map((sub) => (
               <div
@@ -151,10 +169,17 @@ export default function Resources() {
             {notes.map((n) => (
               <div key={n._id} className="note-card">
                 <h3>{n.title}</h3>
-                <p>{n.subject} ({n.subjectCode})</p>
+                <p>
+                  {n.subject} ({n.subjectCode})
+                </p>
                 <p>Tags: {n.tags?.join(", ")}</p>
 
-                <a href={getNoteUrl(n)} target="_blank" className="open-btn" rel="noreferrer">
+                <a
+                  href={getNoteUrl(n)}
+                  target="_blank"
+                  className="open-btn"
+                  rel="noreferrer"
+                >
                   Open
                 </a>
               </div>

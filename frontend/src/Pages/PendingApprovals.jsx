@@ -28,7 +28,6 @@ export default function PendingApprovals({ adminName = "Admin" }) {
 
   useEffect(() => {
     fetchPending();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function fetchPending() {
@@ -48,7 +47,7 @@ export default function PendingApprovals({ adminName = "Admin" }) {
     try {
       await axios.patch(`/api/admin/notes/${id}/approve`, {
         adminName,
-        message: adminMessage || ""
+        message: adminMessage || "",
       });
       setAdminMessage("");
       await fetchPending();
@@ -64,7 +63,7 @@ export default function PendingApprovals({ adminName = "Admin" }) {
       await axios.patch(`/api/admin/notes/${id}/reject`, {
         adminName,
         message: adminMessage || "",
-        deleteFile: false
+        deleteFile: false,
       });
       setAdminMessage("");
       await fetchPending();
@@ -90,8 +89,10 @@ export default function PendingApprovals({ adminName = "Admin" }) {
   return (
     <div className="admin-container">
       <nav className="navbar-glass" style={{ marginBottom: 20 }}>
-        <div className="logo"><a href="/admin-dashboard">EduConnect</a> — Pending Approvals</div>
-        
+        <div className="logo">
+          <a href="/admin-dashboard">EduConnect</a> — Pending Approvals
+        </div>
+
         <div style={{ display: "flex", gap: 10 }}>
           <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
             {theme === "dark" ? "🌞 Light" : "🌙 Dark"}
@@ -120,19 +121,28 @@ export default function PendingApprovals({ adminName = "Admin" }) {
         <div style={{ display: "grid", gap: 12 }}>
           {pending.map((n) => (
             <div key={n._id} className="note-card" style={{ padding: 12 }}>
-              <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  gap: 12,
+                }}
+              >
                 <div style={{ flex: 1 }}>
                   <h3 style={{ margin: "4px 0" }}>{n.title || "(no title)"}</h3>
                   <p style={{ margin: "4px 0", opacity: 0.9 }}>
                     {n.branch} - {n.scheme} - {n.subject} ({n.subjectCode})
                   </p>
                   <p style={{ margin: "4px 0" }}>
-                    Uploaded by: {n.uploader?.name || "Anonymous"} ({n.uploader?.email || "—"})
+                    Uploaded by: {n.uploader?.name || "Anonymous"} (
+                    {n.uploader?.email || "—"})
                   </p>
                   <p style={{ margin: "4px 0" }}>Tags: {n.tags?.join(", ")}</p>
                 </div>
 
-                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                <div
+                  style={{ display: "flex", flexDirection: "column", gap: 8 }}
+                >
                   {n.filePath && (
                     <a
                       href={getNoteUrl(n)}

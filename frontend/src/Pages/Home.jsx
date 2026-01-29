@@ -8,7 +8,7 @@ import "../style/home.css";
 
 export default function Home() {
   const navigate = useNavigate();
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
+  const [theme] = useState(localStorage.getItem("theme") || "dark");
 
   // undefined = loading, null = logged out, object = logged in
   const [user, setUser] = useState(undefined);
@@ -20,18 +20,6 @@ export default function Home() {
   }, [theme]);
 
   useEffect(() => {
-    // Fast synchronous check if Firebase already has currentUser (avoids flicker)
-    const fastUser = auth.currentUser ?? undefined;
-    if (fastUser) {
-      console.log("[Home] fast path auth.currentUser:", fastUser.uid);
-      setUser(fastUser);
-      const adminUid = localStorage.getItem("adminUid");
-      setIsAdmin(Boolean(adminUid && fastUser.uid === adminUid));
-    } else {
-      // If there's no immediate user, start as loading (undefined)
-      setUser(undefined);
-    }
-
     // Subscribe to auth changes (this is the reliable source)
     const unsub = auth.onAuthStateChanged(
       (u) => {
@@ -55,7 +43,7 @@ export default function Home() {
       (err) => {
         console.error("[Home] onAuthStateChanged error:", err);
         setUser(null);
-      }
+      },
     );
 
     return () => unsub();
@@ -75,12 +63,48 @@ export default function Home() {
   }
 
   const cards = [
-    { title: "Dashboard", desc: "View and manage your profile", to: "/dashboard", icon: "🏠", adminOnly: false },
-    { title: "Resources", desc: "Browse approved notes and resources", to: "/resources", icon: "📚", adminOnly: false },
-    { title: "Upload", desc: "Upload notes (pending admin approval)", to: "/upload", icon: "📤", adminOnly: false },
-    { title: "Chat", desc: "Open chats with peers", to: "/chats", icon: "💬", adminOnly: false },
-    { title: "Pending Approvals", desc: "Approve or reject user uploads", to: "/admin/pending", icon: "📝", adminOnly: true },
-    { title: "Admin Dashboard", desc: "Admin uploads & management", to: "/admin", icon: "🛠️", adminOnly: true },
+    {
+      title: "Dashboard",
+      desc: "View and manage your profile",
+      to: "/dashboard",
+      icon: "🏠",
+      adminOnly: false,
+    },
+    {
+      title: "Resources",
+      desc: "Browse approved notes and resources",
+      to: "/resources",
+      icon: "📚",
+      adminOnly: false,
+    },
+    {
+      title: "Upload",
+      desc: "Upload notes (pending admin approval)",
+      to: "/upload",
+      icon: "📤",
+      adminOnly: false,
+    },
+    {
+      title: "Chat",
+      desc: "Open chats with peers",
+      to: "/chats",
+      icon: "💬",
+      adminOnly: false,
+    },
+    {
+      title: "Pending Approvals",
+      desc: "Approve or reject user uploads",
+      to: "/admin/pending",
+      icon: "📝",
+      adminOnly: true,
+    },
+    {
+      title: "Admin Dashboard",
+      desc: "Admin uploads & management",
+      to: "/admin",
+      icon: "🛠️",
+      adminOnly: true,
+    },
   ];
   const visibleCards = cards.filter((c) => !c.adminOnly || isAdmin);
 
@@ -90,13 +114,19 @@ export default function Home() {
       <div className="home-container">
         <h1>Welcome to EduConnect 🌍</h1>
         <p>Loading your session…</p>
-        <div style={{ display: "flex", justifyContent: "center", marginTop: 18 }}>
-          <div style={{
-            width: 40, height: 40, borderRadius: 999,
-            border: "4px solid rgba(255,255,255,0.08)",
-            borderTopColor: "rgba(0,200,255,0.95)",
-            animation: "spin 1s linear infinite"
-          }} />
+        <div
+          style={{ display: "flex", justifyContent: "center", marginTop: 18 }}
+        >
+          <div
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 999,
+              border: "4px solid rgba(255,255,255,0.08)",
+              borderTopColor: "rgba(0,200,255,0.95)",
+              animation: "spin 1s linear infinite",
+            }}
+          />
         </div>
         <div className="canvas-glass" style={{ opacity: 0.7, marginTop: 20 }}>
           <Canvas>
@@ -120,8 +150,9 @@ export default function Home() {
       <div className="home-container">
         <h1>Welcome to EduConnect 🌍</h1>
         <p>
-          EduConnect is your student empowerment hub — collaborate, share notes, and connect with peers.
-          Join today to access resources, groups, and real-time messaging designed to help you succeed.
+          EduConnect is your student empowerment hub — collaborate, share notes,
+          and connect with peers. Join today to access resources, groups, and
+          real-time messaging designed to help you succeed.
         </p>
 
         <div className="canvas-glass">
@@ -135,8 +166,15 @@ export default function Home() {
           </Canvas>
         </div>
 
-        <div style={{ display: "flex", justifyContent: "center", marginTop: 18 }}>
-          <button className="glass-button primary" onClick={() => navigate("/register")}>Get Started</button>
+        <div
+          style={{ display: "flex", justifyContent: "center", marginTop: 18 }}
+        >
+          <button
+            className="glass-button primary"
+            onClick={() => navigate("/register")}
+          >
+            Get Started
+          </button>
         </div>
       </div>
     );
@@ -147,8 +185,9 @@ export default function Home() {
     <div className="home-container">
       <h1>Welcome to EduConnect 🌍</h1>
       <p>
-        EduConnect is your student empowerment hub — collaborate, share notes, and connect with peers.
-        Join today to access resources, groups, and real-time messaging designed to help you succeed.
+        EduConnect is your student empowerment hub — collaborate, share notes,
+        and connect with peers. Join today to access resources, groups, and
+        real-time messaging designed to help you succeed.
       </p>
 
       <div className="canvas-glass">
@@ -173,7 +212,9 @@ export default function Home() {
               onClick={() => navigate(c.to)}
               role="button"
               tabIndex={0}
-              onKeyDown={(e) => { if (e.key === "Enter") navigate(c.to); }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") navigate(c.to);
+              }}
             >
               <div className="card-icon">{c.icon}</div>
               <div className="card-body">

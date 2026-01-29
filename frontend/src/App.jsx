@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Home from "./Pages/Home";
 import Register from "./Pages/Register";
@@ -12,17 +12,13 @@ import AdminDashboard from "./Pages/AdminDashboard";
 import PublicUpload from "./Pages/PublicUpload";
 import PendingApprovals from "./Pages/PendingApprovals";
 import Chat from "./Pages/Chat";
-import Navbar from './components/Navbar';
-
+import Navbar from "./components/Navbar";
 
 function App() {
-  
-
   return (
     <div className="App">
-      < Navbar />
-      
-      
+      <Navbar />
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />

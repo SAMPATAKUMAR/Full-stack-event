@@ -28,7 +28,7 @@ export default function AdminDashboard() {
     CSE: ["DSA", "DBMS", "OS", "CN"],
     ECE: ["Signals", "Electronics"],
     ME: ["Thermodynamics"],
-    EE: ["Circuits"]
+    EE: ["Circuits"],
   };
 
   // Apply theme on mount and when it changes
@@ -36,10 +36,6 @@ export default function AdminDashboard() {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
-
-  useEffect(() => {
-    fetchNotes();
-  }, []);
 
   const fetchNotes = async () => {
     try {
@@ -49,6 +45,11 @@ export default function AdminDashboard() {
       console.error("Failed to fetch notes:", error);
     }
   };
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    fetchNotes();
+  }, []);
 
   // Upload note
   const handleUpload = async () => {
@@ -128,7 +129,13 @@ export default function AdminDashboard() {
 
     try {
       await axios.patch(`/api/admin/notes/${editId}`, {
-        branch, scheme, subject, subjectCode, title, url, tags
+        branch,
+        scheme,
+        subject,
+        subjectCode,
+        title,
+        url,
+        tags,
       });
 
       setEditId(null);
@@ -188,19 +195,25 @@ export default function AdminDashboard() {
 
         <select value={branch} onChange={(e) => setBranch(e.target.value)}>
           {branches.map((b) => (
-            <option key={b} value={b}>{b}</option>
+            <option key={b} value={b}>
+              {b}
+            </option>
           ))}
         </select>
 
         <select value={scheme} onChange={(e) => setScheme(e.target.value)}>
           {schemes.map((s) => (
-            <option key={s} value={s}>{s}</option>
+            <option key={s} value={s}>
+              {s}
+            </option>
           ))}
         </select>
 
         <select value={subject} onChange={(e) => setSubject(e.target.value)}>
           {subjects[branch].map((s) => (
-            <option key={s} value={s}>{s}</option>
+            <option key={s} value={s}>
+              {s}
+            </option>
           ))}
         </select>
 
@@ -245,7 +258,9 @@ export default function AdminDashboard() {
                   onChange={handleEditChange}
                 >
                   {branches.map((b) => (
-                    <option key={b} value={b}>{b}</option>
+                    <option key={b} value={b}>
+                      {b}
+                    </option>
                   ))}
                 </select>
 
@@ -255,7 +270,9 @@ export default function AdminDashboard() {
                   onChange={handleEditChange}
                 >
                   {schemes.map((s) => (
-                    <option key={s} value={s}>{s}</option>
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
                   ))}
                 </select>
 
@@ -265,7 +282,9 @@ export default function AdminDashboard() {
                   onChange={handleEditChange}
                 >
                   {subjects[editData.branch].map((s) => (
-                    <option key={s} value={s}>{s}</option>
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
                   ))}
                 </select>
 
