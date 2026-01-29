@@ -6,8 +6,8 @@ import mongoose from "mongoose";
 import path from "path";
 import http from "http";
 import { Server as SocketIOServer } from "socket.io";
-import admin from "firebase-admin";
-import fs from "fs";
+import admin from "./firebase.js";
+
 
 import messagesRoute from "./routes/messages.js";
 import Message from "./models/Message.js";
@@ -41,20 +41,7 @@ app.use("/api/messages", messagesRoute);
 // Health
 app.get("/api/health", (req, res) => res.json({ status: "ok", time: new Date() }));
 
-// Firebase Admin init
-const serviceAccountPath =
-  process.env.FIREBASE_SERVICE_ACCOUNT_PATH || "./firebase-service-account.json";
-if (!fs.existsSync(serviceAccountPath)) {
-  console.error("Firebase service account JSON not found at", serviceAccountPath);
-  process.exit(1);
-}
-try {
-  const sa = JSON.parse(fs.readFileSync(serviceAccountPath, "utf8"));
-  admin.initializeApp({ credential: admin.credential.cert(sa) });
-} catch (err) {
-  console.error("Failed to init firebase admin:", err.message);
-  process.exit(1);
-}
+// Firebase Admin initialized in ./firebase.js
 
 // MongoDB connect
 mongoose
