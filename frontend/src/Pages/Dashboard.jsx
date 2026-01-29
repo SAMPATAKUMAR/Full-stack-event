@@ -23,8 +23,9 @@ const Dashboard = () => {
       try {
         const uid = localStorage.getItem("uid");
         if (!uid) return;
-        const API_URL =
-          import.meta.env.VITE_API_URL || "http://localhost:5000/api/profile";
+        const BASE_URL =
+          import.meta.env.VITE_API_URL || "http://localhost:5000";
+        const API_URL = `${BASE_URL}/api/profile`;
         const res = await axios.get(`${API_URL}/${uid}`);
         setUser(res.data);
         setFormData(res.data);
@@ -42,8 +43,8 @@ const Dashboard = () => {
   const handleSave = async () => {
     try {
       const uid = localStorage.getItem("uid");
-      const API_URL =
-        import.meta.env.VITE_API_URL || "http://localhost:5000/api/profile";
+      const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const API_URL = `${BASE_URL}/api/profile`;
       const res = await axios.put(`${API_URL}/${uid}`, formData);
       setUser(res.data);
       setEditing(false);

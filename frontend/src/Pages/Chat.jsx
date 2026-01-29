@@ -6,8 +6,8 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { io } from "socket.io-client";
 import "../Style/chat.css";
 
-const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-const PROFILE_API = import.meta.env.VITE_API_URL || `${API_BASE}/api/profile`;
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const PROFILE_API = `${API_BASE}/api/profile`;
 
 function makeClientId() {
   return `c_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;

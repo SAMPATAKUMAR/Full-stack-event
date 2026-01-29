@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../utils/api";
 import { auth } from "../firebase"; // Assuming you use Firebase auth for logout
 import { getNoteUrl } from "../utils/getNoteUrl";
 import "../Style/admin.css";
@@ -39,7 +39,7 @@ export default function AdminDashboard() {
 
   const fetchNotes = async () => {
     try {
-      const res = await axios.get("/api/admin/notes");
+      const res = await api.get("/api/admin/notes");
       setNotes(res.data);
     } catch (error) {
       console.error("Failed to fetch notes:", error);
@@ -68,7 +68,7 @@ export default function AdminDashboard() {
     if (file) formData.append("file", file);
 
     try {
-      await axios.post("/api/admin/notes", formData);
+      await api.post("/api/admin/notes", formData);
       clearUploadForm();
       fetchNotes();
     } catch (error) {
@@ -88,7 +88,7 @@ export default function AdminDashboard() {
   // Delete note
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/api/admin/notes/${id}`);
+      await api.delete(`/api/admin/notes/${id}`);
       fetchNotes();
     } catch (error) {
       alert("Failed to delete note");
