@@ -1,6 +1,6 @@
 // client/src/Pages/Resources.jsx
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../utils/api";
 import { getNoteUrl } from "../utils/getNoteUrl";
 import "../Style/resources.css";
 
@@ -36,7 +36,7 @@ export default function Resources() {
     if (!branchVal || !schemeVal || !subjectVal) return;
     try {
       // Use the public endpoint that returns only approved notes
-      const res = await axios.get("/api/notes");
+      const res = await api.get("/api/notes");
 
       // Defensive: res.data might be an object (error or wrapped), convert to array safely
       let data = res.data;
