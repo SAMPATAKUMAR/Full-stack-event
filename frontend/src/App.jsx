@@ -13,6 +13,7 @@ import PublicUpload from "./Pages/PublicUpload";
 import PendingApprovals from "./Pages/PendingApprovals";
 import Chat from "./Pages/Chat";
 import Navbar from "./components/Navbar";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path="*" element={<h2>404: Page Not Found</h2>} />
       </Routes>
       <ToastContainer position="top-right" autoClose={3000} />
+      <SpeedInsights />
     </div>
   );
 }
