@@ -9,6 +9,8 @@ const serviceAccount = {
     : undefined,
 };
 
+
+
 if (!serviceAccount.privateKey) {
   console.error("Missing FIREBASE_PRIVATE_KEY in environment variables");
 }
