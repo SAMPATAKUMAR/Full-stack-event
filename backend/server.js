@@ -43,7 +43,7 @@ app.get("/api/health", (req, res) => res.json({ status: "ok", time: new Date() }
 
 // Firebase Admin init
 const serviceAccountPath =
-  process.env.FIREBASE_SERVICE_ACCOUNT_PATH || "./firebase-admin-service-account.json";
+  process.env.FIREBASE_SERVICE_ACCOUNT_PATH || "./firebase-service-account.json";
 if (!fs.existsSync(serviceAccountPath)) {
   console.error("Firebase service account JSON not found at", serviceAccountPath);
   process.exit(1);
