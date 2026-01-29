@@ -15,7 +15,7 @@ const Login = () => {
 
   const toggleTheme = () =>
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));
-  const Admin_uid = "UR_ID";
+  const Admin_uid = import.meta.env.VITE_ADMIN_UID || "UR_ID";
 
   const handleLogin = async (e) => {
     e.preventDefault();
