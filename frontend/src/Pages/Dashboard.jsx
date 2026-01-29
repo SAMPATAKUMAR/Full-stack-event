@@ -5,7 +5,6 @@ import "../style/dashboard.css";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { auth } from "../firebase";
-import { FiLogOut } from "react-icons/fi";
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
@@ -86,16 +85,26 @@ const Dashboard = () => {
           </div>
 
           <div className="profile-actions">
-            <span className="college-pill">
-              {user?.college || "College"}
-            </span>
+            <span className="college-pill">{user?.college || "College"}</span>
             {/* <button className="pill-btn join-btn">Join</button> */}
             {user && (
-              <button
-                className="pill-btn signout-btn"
-                onClick={handleLogout}
-              >
-                <FiLogOut className="logout-icon" />
+              <button className="pill-btn signout-btn" onClick={handleLogout}>
+                <svg
+                  stroke="currentColor"
+                  fill="none"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="logout-icon"
+                  height="1em"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                  <polyline points="16 17 21 12 16 7"></polyline>
+                  <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
                 Sign out
               </button>
             )}
@@ -174,16 +183,13 @@ const Dashboard = () => {
             <div className="profile-info-grid">
               <div className="profile-col">
                 <p>
-                  <span className="label">College:</span>{" "}
-                  {user?.college || "-"}
+                  <span className="label">College:</span> {user?.college || "-"}
                 </p>
                 <p>
-                  <span className="label">Branch:</span>{" "}
-                  {user?.branch || "-"}
+                  <span className="label">Branch:</span> {user?.branch || "-"}
                 </p>
                 <p>
-                  <span className="label">Course:</span>{" "}
-                  {user?.course || "-"}
+                  <span className="label">Course:</span> {user?.course || "-"}
                 </p>
               </div>
               <div className="profile-col">
@@ -192,8 +198,7 @@ const Dashboard = () => {
                   {user?.semester || "-"}
                 </p>
                 <p>
-                  <span className="label">Email:</span>{" "}
-                  {user?.email || "-"}
+                  <span className="label">Email:</span> {user?.email || "-"}
                 </p>
               </div>
             </div>
