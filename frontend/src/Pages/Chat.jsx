@@ -318,7 +318,7 @@ export default function Chat({ onSignOut }) {
         </div>
       </div>
 
-      <hr />
+      <hr className="hr-chat" />
 
       <div className="messages" role="log" aria-live="polite">
         {messages.map((m) => (
