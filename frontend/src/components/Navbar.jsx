@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { auth } from "../firebase";   // IMPORTANT
-import "../style/navbar.css";
+import { auth } from "../firebase"; // IMPORTANT
+import "../Style/navbar.css";
 
 function Navbar() {
   // Hooks must always run — do NOT put returns before hooks
-  const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "dark");
+  const [theme, setTheme] = useState(
+    () => localStorage.getItem("theme") || "dark",
+  );
   const [user, setUser] = useState(null); // real-time auth user
   const location = useLocation();
 
@@ -29,26 +31,58 @@ function Navbar() {
   const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
 
   // Now it's safe to early-return based on route because all hooks above already ran
-  const hideOn = ["/login", "/register", "/verify-email", "/admin-dashboard" , "/pending"];
+  const hideOn = [
+    "/login",
+    "/register",
+    "/verify-email",
+    "/admin-dashboard",
+    "/pending",
+  ];
   if (hideOn.includes(location.pathname)) return null;
 
   return (
     <div className="nav-container">
       <nav className="navbar-glass">
         <div className="logo">
-          <Link className="h-btn" to="/">EduConnect</Link>
+          <Link className="h-btn" to="/">
+            EduConnect
+          </Link>
         </div>
 
         <div className="nav-links">
           {/* NOT LOGGED IN */}
-          {!user && <Link className="Link-btn1" to="/login">Login</Link>}
-          {!user && <Link className="Link-btn2" to="/register">Register</Link>}
+          {!user && (
+            <Link className="Link-btn1" to="/login">
+              Login
+            </Link>
+          )}
+          {!user && (
+            <Link className="Link-btn2" to="/register">
+              Register
+            </Link>
+          )}
 
           {/* LOGGED IN */}
-          {user && <Link className="Link-btn3" to="/dashboard">Dashboard</Link>}
-          {user && <Link className="Link-btn4" to="/resources">Resources</Link>}
-          {user && <Link className="Link-btn5" to="/upload">Upload</Link>}
-          {user && <Link className="Link-btn6" to="/chats">Chat</Link>}
+          {user && (
+            <Link className="Link-btn3" to="/dashboard">
+              Dashboard
+            </Link>
+          )}
+          {user && (
+            <Link className="Link-btn4" to="/resources">
+              Resources
+            </Link>
+          )}
+          {user && (
+            <Link className="Link-btn5" to="/upload">
+              Upload
+            </Link>
+          )}
+          {user && (
+            <Link className="Link-btn6" to="/chats">
+              Chat
+            </Link>
+          )}
 
           <button className="theme-toggle" onClick={toggleTheme}>
             {theme === "dark" ? "🌞 Light Mode" : "🌙 Dark Mode"}

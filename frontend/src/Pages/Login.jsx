@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "../style/login.css";
+import "../Style/login.css";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { toast } from "react-toastify";
@@ -13,36 +13,35 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const toggleTheme = () => setTheme(prev => (prev === "dark" ? "light" : "dark"));
+  const toggleTheme = () =>
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
   const Admin_uid = "UR_ID";
 
   const handleLogin = async (e) => {
-  e.preventDefault();
-  try {
-    // 1️⃣ Firebase login
-    const userCred = await signInWithEmailAndPassword(auth, email, password);
-    const uid = userCred.user.uid; // ✅ Get UID after login
+    e.preventDefault();
+    try {
+      // 1️⃣ Firebase login
+      const userCred = await signInWithEmailAndPassword(auth, email, password);
+      const uid = userCred.user.uid; // ✅ Get UID after login
 
+      // 2️⃣ Check email verification only for normal users
+      if (uid !== Admin_uid && !userCred.user.emailVerified) {
+        toast.warn("Please verify your email before logging in.");
+        return;
+      }
 
-    // 2️⃣ Check email verification only for normal users
-    if (uid !== Admin_uid && !userCred.user.emailVerified) {
-      toast.warn("Please verify your email before logging in.");
-      return;
-    }
+      // 3️⃣ Save UID
+      localStorage.setItem("uid", uid);
 
-    // 3️⃣ Save UID
-    localStorage.setItem("uid", uid);
+      // 4️⃣ Admin bypasses USN & MongoDB check
+      if (uid === Admin_uid) {
+        toast.success("Admin login successful!");
+        navigate("/admin-dashboard");
+        return;
+      }
 
-    // 4️⃣ Admin bypasses USN & MongoDB check
-    if (uid === Admin_uid) {
-      toast.success("Admin login successful!");
-      navigate("/admin-dashboard");
-      return;
-    }
-
-
-
-      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api/auth";
+      const API_URL =
+        import.meta.env.VITE_API_URL || "http://localhost:5000/api/auth";
       const res = await axios.get(`${API_URL}/${uid}`);
       if (!res.data) throw new Error("User not found");
 
@@ -61,7 +60,9 @@ const Login = () => {
   };
 
   return (
-    <div className={`login-bg ${theme === "light" ? "light-theme" : "dark-theme"}`}>
+    <div
+      className={`login-bg ${theme === "light" ? "light-theme" : "dark-theme"}`}
+    >
       <header className="login-header">
         <h1>EduConnect</h1>
         <nav className="login-nav">
@@ -78,12 +79,32 @@ const Login = () => {
         <div className="login-card">
           <h2>Welcome Back</h2>
           <form onSubmit={handleLogin}>
-            <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-            <input type="text" placeholder="USN" value={usn} onChange={(e) => setUsn(e.target.value.toUpperCase())} required />
-            <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <input
+              type="text"
+              placeholder="USN"
+              value={usn}
+              onChange={(e) => setUsn(e.target.value.toUpperCase())}
+              required
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
             <button type="submit">Login</button>
           </form>
-          <p>Don't have an account? <Link to="/register">Register here</Link></p>
+          <p>
+            Don't have an account? <Link to="/register">Register here</Link>
+          </p>
           <p className="login-user-id">@EduConnect</p>
         </div>
       </main>

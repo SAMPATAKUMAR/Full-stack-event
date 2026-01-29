@@ -4,7 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { io } from "socket.io-client";
-import "../style/chat.css";
+import "../Style/chat.css";
 
 const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5000";
 const PROFILE_API = import.meta.env.VITE_API_URL || `${API_BASE}/api/profile`;
@@ -69,7 +69,7 @@ export default function Chat({ onSignOut }) {
     try {
       const res = await fetch(
         `${API_BASE}/api/messages?room=${encodeURIComponent(r)}&limit=200`,
-        { signal: controller.signal }
+        { signal: controller.signal },
       );
       if (!res.ok) throw new Error("Failed to fetch messages");
       const data = await res.json();
@@ -118,7 +118,8 @@ export default function Chat({ onSignOut }) {
                 const copy = prev.slice();
                 const serverSender = m.senderName || m.displayName || "";
                 const serverHasEmail =
-                  typeof serverSender === "string" && serverSender.includes("@");
+                  typeof serverSender === "string" &&
+                  serverSender.includes("@");
                 const finalDisplayName = serverHasEmail
                   ? copy[idx].displayName || "Unknown"
                   : serverSender || copy[idx].displayName || "Unknown";

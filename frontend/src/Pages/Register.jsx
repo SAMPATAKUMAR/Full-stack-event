@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "../style/register.css";
-import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import "../Style/register.css";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
 import { auth } from "../firebase";
 import { toast } from "react-toastify";
 
@@ -22,7 +25,11 @@ const Register = () => {
     e.preventDefault();
     try {
       // Firebase Authentication
-      const userCred = await createUserWithEmailAndPassword(auth, email, password);
+      const userCred = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
       const uid = userCred.user.uid;
 
       // Send verification email
@@ -30,8 +37,18 @@ const Register = () => {
       toast.success("Verification email sent! Please verify your email.");
 
       // Save profile to MongoDB immediately
-      const profileData = { uid, name, usn, email, college, branch, course, semester };
-      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api/auth";
+      const profileData = {
+        uid,
+        name,
+        usn,
+        email,
+        college,
+        branch,
+        course,
+        semester,
+      };
+      const API_URL =
+        import.meta.env.VITE_API_URL || "http://localhost:5000/api/auth";
 
       try {
         await fetch(`${API_URL}/register`, {
@@ -72,7 +89,9 @@ const Register = () => {
           <Link to="/login">Login</Link>
           <button
             className="theme-toggle"
-            onClick={() => setTheme(theme === "dark-theme" ? "light-theme" : "dark-theme")}
+            onClick={() =>
+              setTheme(theme === "dark-theme" ? "light-theme" : "dark-theme")
+            }
           >
             {theme === "dark-theme" ? "Light Mode" : "Dark Mode"}
           </button>
@@ -82,17 +101,59 @@ const Register = () => {
       <div className="register-card">
         <h2>Create Account</h2>
         <form onSubmit={handleRegister}>
-          <input type="text" placeholder="Full Name" required onChange={(e) => setName(e.target.value)} />
-          <input type="text" placeholder="USN" required onChange={(e) => setUsn(e.target.value.toUpperCase())} />
-          <input type="email" placeholder="Email" required onChange={(e) => setEmail(e.target.value)} />
-          <input type="password" placeholder="Password" required onChange={(e) => setPassword(e.target.value)} />
-          <input type="text" placeholder="College" required onChange={(e) => setCollege(e.target.value)} />
-          <input type="text" placeholder="Branch" required onChange={(e) => setBranch(e.target.value)} />
-          <input type="text" placeholder="Course" required onChange={(e) => setCourse(e.target.value)} />
-          <input type="text" placeholder="Semester" required onChange={(e) => setSemester(e.target.value)} />
+          <input
+            type="text"
+            placeholder="Full Name"
+            required
+            onChange={(e) => setName(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="USN"
+            required
+            onChange={(e) => setUsn(e.target.value.toUpperCase())}
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            required
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            required
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="College"
+            required
+            onChange={(e) => setCollege(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Branch"
+            required
+            onChange={(e) => setBranch(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Course"
+            required
+            onChange={(e) => setCourse(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Semester"
+            required
+            onChange={(e) => setSemester(e.target.value)}
+          />
           <button type="submit">Register</button>
         </form>
-        <p>Already registered? <Link to="/login">Login</Link></p>
+        <p>
+          Already registered? <Link to="/login">Login</Link>
+        </p>
       </div>
     </div>
   );

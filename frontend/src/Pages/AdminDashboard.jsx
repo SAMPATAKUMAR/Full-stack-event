@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { auth } from "../firebase"; // Assuming you use Firebase auth for logout
 import { getNoteUrl } from "../utils/getNoteUrl";
-import "../style/admin.css";
+import "../Style/admin.css";
 
 export default function AdminDashboard() {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");

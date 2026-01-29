@@ -4,7 +4,7 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Sphere } from "@react-three/drei";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
-import "../style/home.css";
+import "../Style/home.css";
 
 export default function Home() {
   const navigate = useNavigate();

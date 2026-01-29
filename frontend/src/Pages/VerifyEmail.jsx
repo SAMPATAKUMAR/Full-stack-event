@@ -4,7 +4,7 @@ import { auth } from "../firebase";
 import { onAuthStateChanged, sendEmailVerification } from "firebase/auth";
 import { toast } from "react-toastify";
 import Confetti from "react-confetti";
-import "../style/verifyemail.css"; // make sure this path matches your folder
+import "../Style/verifyemail.css"; // make sure this path matches your folder
 
 const VerifyEmail = () => {
   const navigate = useNavigate();
@@ -57,7 +57,7 @@ const VerifyEmail = () => {
     if (cooldown > 0) {
       const timer = setInterval(
         () => setCooldown((prev) => (prev > 0 ? prev - 1 : 0)),
-        1000
+        1000,
       );
       return () => clearInterval(timer);
     }

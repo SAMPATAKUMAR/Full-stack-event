@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { getNoteUrl } from "../utils/getNoteUrl";
-import "../style/admin.css";
+import "../Style/admin.css";
 
 /**
  * Pending Approvals page (standalone)

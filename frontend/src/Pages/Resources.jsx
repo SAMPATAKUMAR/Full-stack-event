@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { getNoteUrl } from "../utils/getNoteUrl";
-import "../style/resources.css";
+import "../Style/resources.css";
 
 export default function Resources() {
   const [theme] = useState(localStorage.getItem("theme") || "dark");
