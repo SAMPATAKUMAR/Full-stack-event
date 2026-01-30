@@ -232,8 +232,7 @@
 /* Responsive */
 @media (max-width: 600px) {
   .navbar-glass {
-    flex-direction: column;
-    align-items: flex-start;
+   display: flex;
   }
   .nav-links {
     margin-top: 10px;
