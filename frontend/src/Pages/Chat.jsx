@@ -249,12 +249,15 @@ export default function Chat({ onSignOut }) {
     }
 
     const clientId = makeClientId();
+    const currentDisplayName = user?.name || user?.displayName || authUser?.displayName || (authUser?.email ? authUser.email.split("@")[0] : "Student");
+
     const optimistic = {
       _id: `local-${Date.now()}`,
       clientId,
       text: textTrim,
-      uid: user?.uid,
-      displayName: user?.displayName || user?.name || "Unknown",
+      uid: user?.uid || authUser?.uid,
+      senderName: currentDisplayName,
+      displayName: currentDisplayName,
       createdAt: new Date().toISOString(),
     };
 
@@ -262,7 +265,7 @@ export default function Chat({ onSignOut }) {
       text: textTrim,
       room,
       clientId,
-      displayName: optimistic.displayName,
+      displayName: currentDisplayName,
     });
 
     setMessages((prev) => [...prev, optimistic]);

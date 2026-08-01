@@ -135,21 +135,26 @@
 
 .edit-full {
   width: 100%;
-  padding: 12px;
-  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+  padding: 14px;
+  background: linear-gradient(135deg, #00f2fe, #4facfe);
   border-radius: var(--radius-sm);
   font-family: var(--font-heading);
   font-weight: 700;
-  color: #0f172a;
+  font-size: 1rem;
+  color: #0b0f19 !important;
   border: none;
-  box-shadow: 0 4px 14px rgba(0, 242, 254, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);
   cursor: pointer;
   transition: var(--transition-normal);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .edit-full:hover {
-  box-shadow: 0 6px 20px rgba(0, 242, 254, 0.5);
+  box-shadow: 0 6px 22px rgba(0, 242, 254, 0.6);
   transform: translateY(-2px);
+  color: #000000 !important;
 }
 
 .profile-edit-grid {

@@ -137,14 +137,17 @@
 }
 
 .btn.primary {
-  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
-  color: #0f172a;
-  box-shadow: 0 4px 14px rgba(0, 242, 254, 0.3);
+  background: linear-gradient(135deg, #00f2fe, #4facfe);
+  color: #0b0f19 !important;
+  font-weight: 700;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 14px rgba(0, 242, 254, 0.4);
 }
 
 .btn.primary:hover {
-  box-shadow: 0 6px 20px rgba(0, 242, 254, 0.5);
+  box-shadow: 0 6px 20px rgba(0, 242, 254, 0.6);
   transform: translateY(-2px);
+  color: #000000 !important;
 }
 
 .btn.ghost {
