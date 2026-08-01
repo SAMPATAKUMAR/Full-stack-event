@@ -17,11 +17,11 @@ router.get("/:uid", async (req, res) => {
 // ✅ Update profile (excluding usn & email)
 router.put("/:uid", async (req, res) => {
   try {
-    const { name, bio, college, branch, course, semester } = req.body;
+    const { name, bio, college, branch, course, semester, profilePicture } = req.body;
 
     const updatedUser = await User.findOneAndUpdate(
       { uid: req.params.uid },
-      { name, bio, college, branch, course, semester },
+      { name, bio, college, branch, course, semester, profilePicture },
       { new: true, runValidators: true }
     );
 
