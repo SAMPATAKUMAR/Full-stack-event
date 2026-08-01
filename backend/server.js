@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import path from "path";
+import fs from "fs";
 import http from "http";
 import { Server as SocketIOServer } from "socket.io";
 import admin from "./firebase.js";
@@ -37,6 +38,21 @@ app.use("/api/profile", profileRoutes);
 app.use("/api/notes", notesRoutes);
 app.use("/api/admin", adminNotesRoutes);
 app.use("/api/messages", messagesRoute);
+
+// Random Quote Endpoint
+app.get("/api/quotes/random", (req, res) => {
+  try {
+    const quotesPath = path.join(path.resolve(), "quotes", "quotes.json");
+    if (fs.existsSync(quotesPath)) {
+      const data = JSON.parse(fs.readFileSync(quotesPath, "utf-8"));
+      const randomQuote = data[Math.floor(Math.random() * data.length)];
+      return res.json(randomQuote);
+    }
+    res.json({ quote: "Education is the passport to the future.", author: "Anonymous" });
+  } catch (err) {
+    res.json({ quote: "Knowledge shared is knowledge multiplied.", author: "Anonymous" });
+  }
+});
 
 // Health
 app.get("/api/health", (req, res) => res.json({ status: "ok", time: new Date() }));

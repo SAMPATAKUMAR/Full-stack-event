@@ -10,6 +10,7 @@ const Dashboard = () => {
   const [user, setUser] = useState(null);
   const [editing, setEditing] = useState(false);
   const [formData, setFormData] = useState({});
+  const [quote, setQuote] = useState(null);
   const [theme] = useState(localStorage.getItem("theme") || "dark");
   const navigate = useNavigate();
 
@@ -17,6 +18,18 @@ const Dashboard = () => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
+
+  const fetchQuote = async () => {
+    try {
+      const res = await api.get("/api/quotes/random");
+      setQuote(res.data);
+    } catch {
+      setQuote({
+        quote: "Education is the passport to the future.",
+        author: "Anonymous",
+      });
+    }
+  };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -32,6 +45,7 @@ const Dashboard = () => {
       }
     };
     fetchUser();
+    fetchQuote();
   }, []);
 
   const handleChange = (e) =>
@@ -205,6 +219,26 @@ const Dashboard = () => {
             >
               Edit Profile
             </button>
+
+            {/* 💡 Daily Inspiration Quote Section */}
+            <div className="quote-card-container">
+              <div className="quote-card-header">
+                <span className="quote-tag">💡 Daily Inspiration</span>
+                <button
+                  className="shuffle-btn"
+                  onClick={fetchQuote}
+                  title="New Random Quote"
+                >
+                  🎲 New Quote
+                </button>
+              </div>
+              {quote && (
+                <blockquote className="quote-body">
+                  <p className="quote-text">&ldquo;{quote.quote}&rdquo;</p>
+                  <cite className="quote-author">&mdash; {quote.author || "Anonymous"}</cite>
+                </blockquote>
+              )}
+            </div>
 
             {/* <p className="register-text">
               Don&apos;t have an account?{" "}
