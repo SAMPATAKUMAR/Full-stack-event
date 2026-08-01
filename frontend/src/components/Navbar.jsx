@@ -41,7 +41,14 @@ function Navbar() {
       <nav className="navbar-glass">
         <div className="logo">
           <Link to="/" onClick={() => setMenuOpen(false)}>
-            EduConnect
+            <span className="logo-icon wave-icon">🎓</span>
+            <span className="logo-text wave-text">
+              {"EduConnect".split("").map((char, index) => (
+                <span key={index} style={{ "--i": index }}>
+                  {char}
+                </span>
+              ))}
+            </span>
           </Link>
         </div>
 

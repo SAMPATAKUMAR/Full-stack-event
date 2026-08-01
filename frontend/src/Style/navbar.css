@@ -24,14 +24,64 @@
 .logo a {
   font-family: var(--font-heading);
   font-weight: 800;
-  font-size: 1.5rem;
+  font-size: 1.55rem;
   letter-spacing: -0.03em;
-  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #00f2fe;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  text-decoration: none;
+  transition: var(--transition-normal);
+}
+
+.logo-icon.wave-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+  display: inline-block;
+  animation: iconWave 2.4s ease-in-out infinite;
+}
+
+.logo-text.wave-text {
+  display: inline-flex;
+}
+
+.logo-text.wave-text span {
+  display: inline-block;
+  background: linear-gradient(135deg, #00f2fe, #4facfe);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #00f2fe;
+  animation: logoLetterWave 1.8s ease-in-out infinite;
+  animation-delay: calc(0.1s * var(--i));
+}
+
+/* 🌊 Continuous Wave Animation Keyframes */
+@keyframes logoLetterWave {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  30% {
+    transform: translateY(-5px) scale(1.08);
+  }
+  60% {
+    transform: translateY(2px);
+  }
+}
+
+@keyframes iconWave {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translateY(-4px) rotate(-10deg) scale(1.1);
+  }
+  50% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
+  75% {
+    transform: translateY(3px) rotate(10deg) scale(1.05);
+  }
 }
 
 .nav-links {
