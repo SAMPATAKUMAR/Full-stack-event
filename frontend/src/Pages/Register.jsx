@@ -7,6 +7,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebase";
 import { toast } from "react-toastify";
+import api from "../utils/api";
 
 const Register = () => {
   const [theme, setTheme] = useState("dark-theme");
@@ -47,15 +48,8 @@ const Register = () => {
         course,
         semester,
       };
-      const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
-      const API_URL = `${BASE_URL}/api/auth`;
-
       try {
-        await fetch(`${API_URL}/register`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(profileData),
-        });
+        await api.post("/api/auth/register", profileData);
         toast.success("Profile saved in database!");
       } catch (err) {
         toast.error("Failed to save profile in MongoDB.");

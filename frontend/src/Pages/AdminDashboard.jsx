@@ -47,7 +47,6 @@ export default function AdminDashboard() {
   };
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     fetchNotes();
   }, []);
 
@@ -128,7 +127,7 @@ export default function AdminDashboard() {
       return alert("Title and Subject Code are required");
 
     try {
-      await axios.patch(`/api/admin/notes/${editId}`, {
+      await api.patch(`/api/admin/notes/${editId}`, {
         branch,
         scheme,
         subject,
@@ -163,8 +162,8 @@ export default function AdminDashboard() {
   return (
     <div className="admin-container">
       <nav className="navbar-glass">
-        <div className="/admin-dashboard">EduConnect Admin</div>
-        <a href="/pending">Peding Uploads</a>
+        <div className="logo">EduConnect Admin</div>
+        <a href="/pending">Pending Uploads</a>
         <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}

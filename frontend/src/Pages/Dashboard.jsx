@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../utils/api";
 import "../Style/theme.css";
 import "../Style/dashboard.css";
 import { useNavigate } from "react-router-dom";
@@ -23,10 +23,7 @@ const Dashboard = () => {
       try {
         const uid = localStorage.getItem("uid");
         if (!uid) return;
-        const BASE_URL =
-          import.meta.env.VITE_API_URL || "http://localhost:5000";
-        const API_URL = `${BASE_URL}/api/profile`;
-        const res = await axios.get(`${API_URL}/${uid}`);
+        const res = await api.get(`/api/profile/${uid}`);
         setUser(res.data);
         setFormData(res.data);
       } catch (err) {
@@ -43,9 +40,7 @@ const Dashboard = () => {
   const handleSave = async () => {
     try {
       const uid = localStorage.getItem("uid");
-      const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
-      const API_URL = `${BASE_URL}/api/profile`;
-      const res = await axios.put(`${API_URL}/${uid}`, formData);
+      const res = await api.put(`/api/profile/${uid}`, formData);
       setUser(res.data);
       setEditing(false);
       toast.success("Profile updated successfully!");

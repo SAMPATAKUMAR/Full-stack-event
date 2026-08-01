@@ -61,7 +61,7 @@ export default function PendingApprovals({ adminName = "Admin" }) {
 
   async function handleReject(id) {
     try {
-      await axios.patch(`/api/admin/notes/${id}/reject`, {
+      await api.patch(`/api/admin/notes/${id}/reject`, {
         adminName,
         message: adminMessage || "",
         deleteFile: false,

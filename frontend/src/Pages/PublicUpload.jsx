@@ -1,11 +1,9 @@
 // src/Pages/PublicUpload.jsx
 import React, { useState, useEffect } from "react";
 import api from "../utils/api"; // your api helper (axios wrapper) or axios instance
-import { Link } from "react-router-dom";
 import "../Style/publicupload.css"; // import the CSS below
 
 export default function PublicUpload({ currentUser }) {
-  const [theme] = useState(localStorage.getItem("theme") || "dark");
   const [branch, setBranch] = useState("CSE");
   const [scheme, setScheme] = useState("2020");
   const [subject, setSubject] = useState("DSA");
@@ -25,10 +23,7 @@ export default function PublicUpload({ currentUser }) {
     EE: ["Circuits"],
   };
 
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
+
 
   const handleSubmit = async () => {
     if (!title || (!url && !file) || !subjectCode) {

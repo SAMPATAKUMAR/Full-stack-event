@@ -4,7 +4,7 @@ import "../Style/login.css";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { toast } from "react-toastify";
-import axios from "axios";
+import api from "../utils/api";
 
 const Login = () => {
   const [theme, setTheme] = useState("dark");
@@ -35,14 +35,13 @@ const Login = () => {
 
       // 4️⃣ Admin bypasses USN & MongoDB check
       if (uid === Admin_uid) {
+        localStorage.setItem("adminUid", uid);
         toast.success("Admin login successful!");
         navigate("/admin-dashboard");
         return;
       }
 
-      const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
-      const API_URL = `${BASE_URL}/api/auth`;
-      const res = await axios.get(`${API_URL}/${uid}`);
+      const res = await api.get(`/api/auth/${uid}`);
       if (!res.data) throw new Error("User not found");
 
       if (res.data.usn !== usn) {

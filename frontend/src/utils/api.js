@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const BASE = typeof import.meta !== "undefined" ? import.meta.env.VITE_API_URL : undefined;
-const baseURL = BASE ? BASE.replace(/\/+$/, "") : "";
+const baseURL = BASE ? BASE.replace(/\/+$/, "").replace(/\/api$/i, "") : "";
 
 const api = axios.create({ baseURL });
 

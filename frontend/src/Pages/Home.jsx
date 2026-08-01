@@ -94,14 +94,14 @@ export default function Home() {
     {
       title: "Pending Approvals",
       desc: "Approve or reject user uploads",
-      to: "/admin/pending",
+      to: "/pending",
       icon: "📝",
       adminOnly: true,
     },
     {
       title: "Admin Dashboard",
       desc: "Admin uploads & management",
-      to: "/admin",
+      to: "/admin-dashboard",
       icon: "🛠️",
       adminOnly: true,
     },

@@ -1,154 +1,132 @@
-/* Base layout */
+/* Neomorphic Auth / Login / Register Styling */
+
 .login-bg {
   min-height: 100vh;
-  font-family: 'Segoe UI', sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
 }
 
-/* Dark theme */
-.dark-theme {
-  background-image: linear-gradient(135deg, #0b0b0d, #101214, #1a1d22);
-  color: white;
-}
-
-/* Light theme */
-.light-theme {
-  background-image: linear-gradient(135deg, #f0f4f8, #e2e8f0, #cbd5e1);
-  color: #1a202c;
-}
-
-/* Header */
 .login-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 16px 32px;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .login-header h1 {
-  font-size: 1.25rem;
-  font-weight: bold;
+  font-size: 1.4rem;
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.login-nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .login-nav a {
-  margin-left: 1.5rem;
-  font-size: 0.875rem;
-  text-decoration: none;
-}
-
-.dark-theme .login-nav a {
-  color: white;
-}
-
-.light-theme .login-nav a {
-  color: #1a202c;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  box-shadow: var(--neu-shadow-sm);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  transition: var(--transition-normal);
 }
 
 .login-nav a:hover {
-  text-decoration: underline;
+  box-shadow: var(--neu-shadow-hover);
+  color: var(--accent-cyan);
 }
 
-.theme-toggle {
-  margin-left: 1.5rem;
-  background: none;
-  border: none;
-  font-size: 0.875rem;
-  cursor: pointer;
-  color: inherit;
-}
-
-/* Card */
 .login-card {
-  max-width: 400px;
-  margin: 5rem auto;
-  padding: 2rem;
-  border-radius: 1rem;
+  max-width: 440px;
+  width: 90%;
+  margin: 40px auto;
+  padding: 36px 32px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface);
+  box-shadow: var(--neu-shadow-flat);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   text-align: center;
-  backdrop-filter: blur(16px);
-  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.35);
 }
 
-.dark-theme .login-card {
-  background-color: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+.login-card h2 {
+  font-size: 1.8rem;
+  margin-bottom: 24px;
+  color: var(--text-primary);
 }
 
-.light-theme .login-card {
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-/* Form */
 .login-card input {
   width: 100%;
-  padding: 0.5rem 1rem;
-  margin-top: 0.25rem;
-  margin-bottom: 1rem;
-  border-radius: 0.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background-color: rgba(255, 255, 255, 0.05);
-  color: inherit;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+  border-radius: var(--radius-sm);
+  border: none;
+  outline: none;
+  background: var(--bg-surface);
+  box-shadow: var(--neu-shadow-pressed);
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-family: var(--font-body);
+  transition: var(--transition-normal);
 }
 
-.light-theme .login-card input {
-  background-color: #f8fafc;
-  border: 1px solid #cbd5e1;
-  color: #1a202c;
+.login-card input:focus {
+  box-shadow: var(--neu-shadow-pressed), 0 0 0 2px var(--accent-cyan);
 }
 
 .login-card input::placeholder {
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--text-muted);
 }
 
-.light-theme .login-card input::placeholder {
-  color: #94a3b8;
-}
-
-.login-card button {
+.login-card button[type="submit"] {
   width: 100%;
-  padding: 0.75rem;
+  padding: 14px;
+  margin-top: 8px;
+  margin-bottom: 20px;
   border: none;
-  border-radius: 0.5rem;
-  font-weight: bold;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+  color: #0f172a;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1rem;
   cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 242, 254, 0.3);
+  transition: var(--transition-normal);
 }
 
-.dark-theme .login-card button {
-  background-color: #2563eb;
-  color: white;
+.login-card button[type="submit"]:hover {
+  box-shadow: 0 6px 20px rgba(0, 242, 254, 0.5);
+  transform: translateY(-2px);
 }
 
-.dark-theme .login-card button:hover {
-  background-color: #1d4ed8;
+.login-card button[type="submit"]:active {
+  transform: translateY(0);
 }
 
-.light-theme .login-card button {
-  background-color: #4f46e5;
-  color: white;
+.login-card p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
 }
 
-.light-theme .login-card button:hover {
-  background-color: #4338ca;
-}
-
-.login-card a {
-  text-decoration: none;
-}
-
-.dark-theme .login-card a {
-  color: #60a5fa;
-}
-
-.light-theme .login-card a {
-  color: #4f46e5;
-}
-
-.login-card a:hover {
-  text-decoration: underline;
+.login-card p a {
+  color: var(--accent-cyan);
+  font-weight: 600;
 }
 
 .login-user-id {
-  margin-top: 0.5rem;
-  font-size: 0.75rem;
-  color: #f87171;
+  margin-top: 16px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
 }

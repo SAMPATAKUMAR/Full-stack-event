@@ -5,7 +5,6 @@ import { getNoteUrl } from "../utils/getNoteUrl";
 import "../Style/resources.css";
 
 export default function Resources() {
-  const [theme] = useState(localStorage.getItem("theme") || "dark");
   const [step, setStep] = useState(1);
   const [branch, setBranch] = useState("");
   const [scheme, setScheme] = useState("");
@@ -21,11 +20,6 @@ export default function Resources() {
     ME: ["Thermodynamics"],
     EE: ["Circuits"],
   };
-
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
 
   const fetchNotes = async (
     branchVal,

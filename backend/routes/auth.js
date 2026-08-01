@@ -1,4 +1,5 @@
 import express from "express";
+import bcrypt from "bcrypt";
 import User from "../models/User.js";
 
 const router = express.Router();
@@ -14,7 +15,8 @@ router.post("/register", async (req, res) => {
       if (existingUser.usn === usn) return res.status(400).json({ message: "USN already registered" });
     }
 
-    const newUser = new User({ uid, name, usn, email, password, college, branch, course, semester });
+    const hashedPassword = password ? await bcrypt.hash(password, 10) : undefined;
+    const newUser = new User({ uid, name, usn, email, password: hashedPassword, college, branch, course, semester });
     await newUser.save();
     res.status(201).json({ message: "User registered successfully", user: newUser });
   } catch (err) {
@@ -46,26 +48,5 @@ router.get("/:uid", async (req, res) => {
   }
 });
 
-
-
-// GET /api/admin/notes
-router.get("/notes", async (req,res) => {
-  const notes = await Note.find();
-  res.json(notes);
-});
-
-// POST /api/admin/notes
-router.post("/notes", async (req,res) => {
-  const note = new Note(req.body);
-  await note.save();
-  res.json(note);
-});
-
-// DELETE /api/admin/notes/:id
-router.delete("/notes/:id", async (req,res) => {
-  await Note.findByIdAndDelete(req.params.id);
-  res.sendStatus(200);
-});
-
-
 export default router;
+

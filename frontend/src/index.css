@@ -1,68 +1,206 @@
-/* :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+  /* Dark Neomorphism Palette (Default) */
+  --bg-main: #181b22;
+  --bg-surface: #1e222d;
+  --bg-card: #202430;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  
+  /* Neomorphic Shadows */
+  --neu-shadow-flat: 8px 8px 16px #13151b, -8px -8px 16px #292f3d;
+  --neu-shadow-hover: 12px 12px 24px #101217, -12px -12px 24px #2c3243;
+  --neu-shadow-pressed: inset 5px 5px 10px #13151b, inset -5px -5px 10px #292f3d;
+  --neu-shadow-sm: 4px 4px 10px #13151b, -4px -4px 10px #292f3d;
+  
+  /* Accent Colors */
+  --accent-cyan: #00f2fe;
+  --accent-blue: #4facfe;
+  --accent-purple: #7000ff;
+  --accent-green: #10b981;
+  --accent-rose: #f43f5e;
+  --accent-amber: #f59e0b;
+  
+  /* Glows */
+  --glow-cyan: 0 0 20px rgba(0, 242, 254, 0.35);
+  --glow-purple: 0 0 20px rgba(112, 0, 255, 0.35);
+  
+  /* Radii */
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+  
+  /* Fonts */
+  --font-heading: 'Outfit', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+  
+  --transition-normal: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+[data-theme="light"] {
+  --bg-main: #e6ecf5;
+  --bg-surface: #edf2f7;
+  --bg-card: #e2e8f0;
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  
+  --neu-shadow-flat: 8px 8px 16px #c4cddb, -8px -8px 16px #ffffff;
+  --neu-shadow-hover: 12px 12px 24px #b8c2d1, -12px -12px 24px #ffffff;
+  --neu-shadow-pressed: inset 5px 5px 10px #c4cddb, inset -5px -5px 10px #ffffff;
+  --neu-shadow-sm: 4px 4px 10px #c4cddb, -4px -4px 10px #ffffff;
+  
+  --glow-cyan: 0 0 15px rgba(0, 242, 254, 0.25);
+  --glow-purple: 0 0 15px rgba(112, 0, 255, 0.25);
 }
-a:hover {
-  color: #535bf2;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
+  font-family: var(--font-body);
+  background-color: var(--bg-main);
+  color: var(--text-primary);
   min-height: 100vh;
+  line-height: 1.6;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ==================== NEOMORPHIC UTILITIES ==================== */
+.neu-card {
+  background: var(--bg-surface);
+  box-shadow: var(--neu-shadow-flat);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  transition: var(--transition-normal);
+}
+
+.neu-card-hover:hover {
+  box-shadow: var(--neu-shadow-hover);
+  transform: translateY(-3px);
+}
+
+.neu-pressed, .neu-input {
+  background: var(--bg-surface);
+  box-shadow: var(--neu-shadow-pressed);
+  border-radius: var(--radius-sm);
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  transition: var(--transition-normal);
+}
+
+.neu-input {
+  padding: 12px 18px;
+  font-size: 0.95rem;
+  font-family: var(--font-body);
+  width: 100%;
+}
+
+.neu-input:focus {
+  box-shadow: var(--neu-shadow-pressed), 0 0 0 2px var(--accent-cyan);
+}
+
+.neu-btn {
+  background: var(--bg-surface);
+  box-shadow: var(--neu-shadow-flat);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  padding: 10px 20px;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: var(--transition-normal);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-} */
+.neu-btn:hover {
+  box-shadow: var(--neu-shadow-hover);
+  transform: translateY(-2px);
+  color: var(--accent-cyan);
+}
+
+.neu-btn:active {
+  box-shadow: var(--neu-shadow-pressed);
+  transform: translateY(0);
+}
+
+.neu-btn-primary {
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+  color: #0f172a;
+  box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
+  border: none;
+}
+
+.neu-btn-primary:hover {
+  box-shadow: 0 6px 20px rgba(0, 242, 254, 0.5);
+  color: #000000;
+}
+
+.neu-badge {
+  background: var(--bg-surface);
+  box-shadow: var(--neu-shadow-sm);
+  border-radius: var(--radius-full);
+  padding: 4px 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent-cyan);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ==================== CUSTOM SCROLLBAR ==================== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-main);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--bg-surface);
+  box-shadow: var(--neu-shadow-flat);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-blue);
+}
+
+/* ==================== ANIMATIONS ==================== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+.animate-fade {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
