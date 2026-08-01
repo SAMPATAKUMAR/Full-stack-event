@@ -11,8 +11,12 @@
   font-size: 2.8rem;
   margin-bottom: 12px;
   background: linear-gradient(135deg, var(--text-primary), var(--accent-cyan));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* -webkit-background-clip: text; */
+  /* -webkit-text-fill-color: transparent; */
+}
+
+.home-container .Wave-text{
+  color:rgb(3, 3, 3);
 }
 
 .home-container p {

@@ -9,10 +9,11 @@
 .resources-container h1 {
   text-align: center;
   font-size: 2.5rem;
+  color: rgb(201, 182, 182);
   margin-bottom: 24px;
   background: linear-gradient(135deg, var(--text-primary), var(--accent-cyan));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* -webkit-background-clip: text; */
+  /* -webkit-text-fill-color: transparent; */
 }
 
 .card-grid {

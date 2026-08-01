@@ -112,7 +112,7 @@ export default function Home() {
   if (user === undefined) {
     return (
       <div className="home-container">
-        <h1>Welcome to EduConnect 🌍</h1>
+        <h1>Welcome to <span className="Wave-text">EduConnect</span> 🌍</h1>
         <p>Loading your session…</p>
         <div
           style={{ display: "flex", justifyContent: "center", marginTop: 18 }}
